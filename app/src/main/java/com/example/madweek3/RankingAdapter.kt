@@ -7,14 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.madweek3.APIservice
 
-data class USER (
-    val email: String,
-    val password: String,
-    val level: Int=0,
-    val score: Int=0,
-    val nickname: String,
-)
 class RankingAdapter(private val context: Context, private val dataList: List<USER>) :
     RecyclerView.Adapter<RankingAdapter.ViewHolder>() {
 
