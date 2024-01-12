@@ -16,18 +16,24 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var emailInput: EditText
     private lateinit var passwordInput: EditText
     private lateinit var liBtn: Button
+    private lateinit var suBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        liBtn = findViewById<Button>(R.id.loginBtn)
-        emailInput = findViewById<EditText>(R.id.liEmail)
-        passwordInput = findViewById<EditText>(R.id.liPW)
+        liBtn = findViewById(R.id.loginBtn)
+        suBtn = findViewById(R.id.TosignupBtn)
+        emailInput = findViewById(R.id.liEmail)
+        passwordInput = findViewById(R.id.liPW)
 
         liBtn.setOnClickListener {
             loginUser()
+        }
+
+        suBtn.setOnClickListener {
+            startActivity(Intent(this@LoginActivity, SignupActivity::class.java))
         }
     }
 
@@ -35,12 +41,18 @@ class LoginActivity : AppCompatActivity() {
         val email = emailInput.text.toString().trim()
         val password = passwordInput.text.toString().trim()
 
-        val userData = User(email, password, "", 0, 0)
+        val userData = User(email, password, "", "", 0)
         RetrofitClient.instance.loginUser(userData)
             .enqueue(object : Callback<UserResponse> {
                 override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                    if (response.isSuccessful) {
-                        Log.d("Login Success", "login success")
+                    if (response.isSuccessful && response.body() != null) {
+                        val userId = response.body()!!.message
+                        println("response " + response.body())
+                        if (userId != null) {
+                            saveUserId(userId)
+                            println("login," + userId)
+                        }
+
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(intent)
                         finish()
@@ -55,5 +67,12 @@ class LoginActivity : AppCompatActivity() {
                     Log.e("error", t.toString())
                 }
             })
+    }
+
+    private fun saveUserId(userId: String) {
+        val sharedPreference = getSharedPreferences("MySharedPref", MODE_PRIVATE)
+        val editor = sharedPreference.edit()
+        editor.putString("userId", userId)
+        editor.apply()
     }
 }
