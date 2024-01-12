@@ -9,7 +9,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.madweek3.APIservice
 
-class RankingAdapter(private val context: Context, private val dataList: List<USER>) :
+class RankingAdapter(private val context: Context, private val dataList: List<User>) :
     RecyclerView.Adapter<RankingAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -21,6 +21,7 @@ class RankingAdapter(private val context: Context, private val dataList: List<US
         val data = dataList[position]
         holder.userNickname.text = data.nickname
         holder.userPoint.text = data.score.toString()
+        holder.userRank.text = (position+1).toString()
     }
 
     override fun getItemCount(): Int {
@@ -28,8 +29,9 @@ class RankingAdapter(private val context: Context, private val dataList: List<US
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val cardView: CardView = itemView.findViewById(R.id.card_view_item)
+        val cardView: CardView = itemView.findViewById(R.id.Ranking_cardView_item)
         val userNickname: TextView = itemView.findViewById(R.id.nickName_text)
         val userPoint: TextView = itemView.findViewById(R.id.point_text)
+        val userRank: TextView = itemView.findViewById(R.id.ranking_text)
     }
 }

@@ -11,23 +11,25 @@
         android:id="@+id/logoutButton"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_margin="10dp">
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1.2"
+        android:orientation="vertical">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/logout_icon"/>
+            android:src="@drawable/logout_icon" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Logout"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:text="Logout" />
     </LinearLayout>
 
 
     <LinearLayout
-        android:id="@+id/EnteringButton"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="10"
@@ -35,26 +37,28 @@
         android:gravity="center_vertical">
 
         <LinearLayout
+            android:id="@+id/EnteringButton"
             android:layout_width="0dp"
             android:layout_height="130dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
             android:layout_margin="30dp"
-            android:background="@drawable/button_background_1">
+            android:layout_weight="1"
+            android:background="@drawable/button_background_1"
+            android:orientation="vertical">
+
             <ImageView
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:layout_gravity="center"
                 android:layout_weight="4"
-                android:src="@drawable/search_icon"/>
+                android:src="@drawable/people_icon" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:layout_gravity="center"
-                android:text="입장하기"/>
+                android:text="입장하기" />
 
         </LinearLayout>
 
@@ -71,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="4"
-                android:src="@drawable/people_icon"/>
+                android:src="@drawable/search_icon"/>
 
             <TextView
                 android:layout_width="wrap_content"

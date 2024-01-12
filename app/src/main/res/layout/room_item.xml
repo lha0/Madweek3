@@ -7,7 +7,7 @@
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp"
     app:cardUseCompatPadding="true"
-    android:id="@+id/Ranking_cardView_item">
+    android:id="@+id/RoomList_cardView_item">
 
     <!-- 카드 내부에 들어갈 레이아웃과 컨텐츠 추가 -->
     <LinearLayout
@@ -18,31 +18,49 @@
         android:layout_gravity="center_vertical">
 
         <TextView
-            android:id="@+id/ranking_text"
+            android:id="@+id/roomName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:text="RoomName"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/numPeople"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="rank"
+            android:gravity="center"
+            android:text="0"
+            android:layout_gravity="center"
             android:textSize="16sp"
             android:textStyle="bold"/>
-
         <TextView
-            android:id="@+id/nickName_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="6"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="User Name"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/point_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Point"
-            android:gravity="center"
+            android:text="/"
+            android:layout_gravity="center"
             android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="4"
+            android:layout_gravity="center"
+            android:textSize="16sp"/>
+
+        <ImageView
+            android:id="@+id/privateSetButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:src="@drawable/unlock_icon"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
