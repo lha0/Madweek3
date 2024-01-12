@@ -21,7 +21,38 @@ class MainFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_main, container, false)
 
+        val rankingButton = view.findViewById<LinearLayout>(R.id.RankingButton)
+        val enteringButton = view.findViewById<LinearLayout>(R.id.EnteringButton)
+        val searchRoomButton = view.findViewById<LinearLayout>(R.id.RoomSearchButton)
         val mypageBtn = view.findViewById<LinearLayout>(R.id.MypageButton)
+
+        rankingButton.setOnClickListener {
+            val rankingFragment = RankingFragment()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container, rankingFragment)
+                .addToBackStack(null)  // 백 스택에 추가
+                .commit()
+        }
+
+        enteringButton.setOnClickListener {
+            val roomListFragment = RoomListFragment()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container, roomListFragment)
+                .addToBackStack(null)  // 백 스택에 추가
+                .commit()
+        }
+
+        searchRoomButton.setOnClickListener {
+            val searchRoomFragment = SearchRoomFragment()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container, searchRoomFragment)
+                .addToBackStack(null)  // 백 스택에 추가
+                .commit()
+        }
+
+
+
+       
 
         mypageBtn.setOnClickListener {
             val Mypage = MypageFragment()
@@ -30,6 +61,7 @@ class MainFragment : Fragment() {
             transaction.addToBackStack(null)
             transaction.commit()
         }
+
         return view
     }
 

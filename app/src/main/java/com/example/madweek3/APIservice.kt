@@ -14,16 +14,29 @@ interface APIservice {
     @POST("/signup")
     fun signupUser(@Body userData: User): Call<UserResponse>
 
+
+    @GET("/getAllRanking")
+    fun getAllRanking(): Call<List<User>>
+
     @GET("/user/{id}")
     suspend fun getUserInfo(@Path("id") id: String): Response<User>
+
 }
 
 data class User(
     val email: String,
     val password: String,
     val nickname: String,
-    val level: String,
-    val score: Int
+    val level: String="새싹 세찬이",
+    val score: Int=0
 )
 
+data class Room (
+    val roomId: String, //파이썬에서 랜덤 문자열 생성 -> 6글자
+    val roomName: String,
+    val numPeople: Int,
+    val privateLock: Boolean,
+    val passwordLock: String,
+    val userList: List<String>, //email로 이용
+)
 data class UserResponse(val message: String, val UID: Int = -1)
