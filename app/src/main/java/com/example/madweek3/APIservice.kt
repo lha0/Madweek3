@@ -5,6 +5,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface APIservice {
     @POST("/login")
@@ -13,8 +14,13 @@ interface APIservice {
     @POST("/signup")
     fun signupUser(@Body userData: User): Call<UserResponse>
 
+
     @GET("/getAllRanking")
     fun getAllRanking(): Call<List<User>>
+
+    @GET("/user/{id}")
+    suspend fun getUserInfo(@Path("id") id: String): Response<User>
+
 }
 
 data class User(

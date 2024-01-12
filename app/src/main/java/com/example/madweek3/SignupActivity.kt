@@ -39,6 +39,7 @@ class SignupActivity : AppCompatActivity() {
         val email = emailInput.text.toString().trim()
         val password = passwordInput.text.toString().trim()
 
+
         val userData = User(email, password, nickname, "새싹 세찬이", 0)
         RetrofitClient.instance.signupUser(userData)
             .enqueue(object: Callback<UserResponse> {

@@ -7,16 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MainFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MainFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,9 +20,11 @@ class MainFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_main, container, false)
+
         val rankingButton = view.findViewById<LinearLayout>(R.id.RankingButton)
         val enteringButton = view.findViewById<LinearLayout>(R.id.EnteringButton)
         val searchRoomButton = view.findViewById<LinearLayout>(R.id.RoomSearchButton)
+        val mypageBtn = view.findViewById<LinearLayout>(R.id.MypageButton)
 
         rankingButton.setOnClickListener {
             val rankingFragment = RankingFragment()
@@ -56,6 +48,18 @@ class MainFragment : Fragment() {
                 .replace(R.id.main_container, searchRoomFragment)
                 .addToBackStack(null)  // 백 스택에 추가
                 .commit()
+        }
+
+
+
+       
+
+        mypageBtn.setOnClickListener {
+            val Mypage = MypageFragment()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.activity_main, Mypage)
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
 
         return view

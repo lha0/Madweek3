@@ -36,6 +36,7 @@ class RankingFragment : Fragment() {
         val userList: List<User> = listOf(
             User(email = "hyemin@naver.com", password = "1234", level="꼬질이 세찬", score=240, nickname="HM"),
             User(email = "hayeong@naver.com", password = "5678", level="멋쟁이 세찬", score=300, nickname="hayeong"),
+
             // 추가적인 User 객체들을 필요에 따라 추가할 수 있습니다.
         )
 
