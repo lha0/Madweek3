@@ -9,7 +9,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.madweek3.APIservice
 
-class RankingAdapter(private val context: Context, private val dataList: List<USER>) :
+class RankingAdapter(private val context: Context, private val dataList: List<User>) :
     RecyclerView.Adapter<RankingAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
