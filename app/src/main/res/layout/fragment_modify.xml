@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MypageFragment">
-
+    tools:context=".ModifyFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -30,10 +29,10 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/modifyBtn"
+            android:id="@+id/modifyConfirmBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="수정"
+            android:text="확인"
             android:textSize="20sp" />
 
     </LinearLayout>
@@ -49,11 +48,11 @@
         android:background="@color/gray"
         android:orientation="vertical"
         android:padding="50sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout3">
+        app:layout_constraintBottom_toTopOf="@+id/layoutNickname"
+        app:layout_constraintStart_toStartOf="@+id/layoutNickname">
 
         <ImageView
-            android:id="@+id/imageSechan"
+            android:id="@+id/myImage"
             android:layout_width="150sp"
             android:layout_height="150sp"
             android:layout_gravity="center"
@@ -75,7 +74,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/mypageLevel"
+                android:id="@+id/myLevel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="꼬질이 세찬"
@@ -85,7 +84,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/layoutNickname"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -104,18 +103,18 @@
             android:textColor="@color/black"
             android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/mypageNickname"
+        <EditText
+            android:id="@+id/editNickname"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="닉네임"
+            android:hint="닉네임"
             android:textSize="20sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout4"
+        android:id="@+id/layoutMail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -123,7 +122,7 @@
         android:layout_marginEnd="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+        app:layout_constraintTop_toBottomOf="@+id/layoutNickname">
 
         <TextView
             android:layout_width="0dp"
@@ -134,12 +133,42 @@
             android:textColor="@color/black"
             android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/mypageEmail"
+        <EditText
+            android:id="@+id/editEmail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="naver.com"
+            android:hint="naver.com"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutPW"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutMail">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10sp"
+            android:layout_weight="1"
+            android:text="비밀번호:"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/editPW"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:hint="새로운 비밀번호"
             android:textSize="20sp" />
 
     </LinearLayout>
