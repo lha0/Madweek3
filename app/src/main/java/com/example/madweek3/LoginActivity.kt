@@ -51,7 +51,6 @@ class LoginActivity : AppCompatActivity() {
                         println("response " + response.body())
                         if (userId != null) {
                             saveUserId(userId)
-                            println("login," + userId)
                         }
 
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
