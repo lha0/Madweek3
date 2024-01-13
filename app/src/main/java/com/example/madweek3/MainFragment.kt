@@ -50,14 +50,10 @@ class MainFragment : Fragment() {
                 .commit()
         }
 
-
-
-       
-
         mypageBtn.setOnClickListener {
             val Mypage = MypageFragment()
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.activity_main, Mypage)
+            transaction.replace(R.id.main_container, Mypage)
             transaction.addToBackStack(null)
             transaction.commit()
         }

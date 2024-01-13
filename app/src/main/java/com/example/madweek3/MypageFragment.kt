@@ -23,6 +23,7 @@ class MypageFragment : Fragment() {
     private var userEmail: String = ""
     private var userPW: String = ""
     private var userLevel: String = ""
+    private var userScore: Int = 0
     private lateinit var questionBtn: Button
     private lateinit var modifyBtn: Button
     private lateinit var sechanImg: ImageView
@@ -44,7 +45,6 @@ class MypageFragment : Fragment() {
         levelView = view.findViewById(R.id.mypageLevel)
         nicknameView = view.findViewById(R.id.mypageNickname)
         emailView = view.findViewById(R.id.mypageEmail)
-        pwLayout = view.findViewById(R.id.setPW)
 
         val sharedPreferences = requireActivity().getSharedPreferences("MySharedPref", MODE_PRIVATE)
         userId = sharedPreferences.getString("userId", "")?:""
@@ -67,6 +67,7 @@ class MypageFragment : Fragment() {
                 userEmail = response.body()!!.email
                 userPW = response.body()!!.password
                 userLevel = response.body()!!.level
+                userScore = response.body()!!.score
             } else {
                 Log.d("response failed", "실패")
             }
@@ -88,7 +89,20 @@ class MypageFragment : Fragment() {
 
         //수정 버튼 눌렀을 때
         modifyBtn.setOnClickListener {
-            //비밀번호 view visible 하게
+            //수정 프래그먼트로 이동
+            val modify = ModifyFragment()
+            val bundle = Bundle()
+            bundle.putString("userID", userId)
+            bundle.putString("email", userEmail)
+            bundle.putString("nickname", userNickname)
+            bundle.putString("password", userPW)
+            bundle.putString("level", userLevel)
+            bundle.putInt("score", userScore)
+            modify.arguments = bundle
+
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.main_container, modify)
+            transaction.commit()
         }
 
     }

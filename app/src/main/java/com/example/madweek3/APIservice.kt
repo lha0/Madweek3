@@ -6,6 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface APIservice {
     @POST("/login")
@@ -20,6 +21,9 @@ interface APIservice {
 
     @GET("/user/{id}")
     suspend fun getUserInfo(@Path("id") id: String): Response<User>
+
+    @POST("/mypageModify/{id}")
+    fun modifyInfo(@Body userInfo: User, @Path("id") id:String): Call<UserResponse>
 
 }
 
