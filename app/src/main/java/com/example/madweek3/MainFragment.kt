@@ -1,5 +1,7 @@
 package com.example.madweek3
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -25,6 +27,7 @@ class MainFragment : Fragment() {
         val enteringButton = view.findViewById<LinearLayout>(R.id.EnteringButton)
         val searchRoomButton = view.findViewById<LinearLayout>(R.id.RoomSearchButton)
         val mypageBtn = view.findViewById<LinearLayout>(R.id.MypageButton)
+        val logoutBtn = view.findViewById<LinearLayout>(R.id.logoutButton)
 
         rankingButton.setOnClickListener {
             val rankingFragment = RankingFragment()
@@ -56,6 +59,17 @@ class MainFragment : Fragment() {
             transaction.replace(R.id.main_container, Mypage)
             transaction.addToBackStack(null)
             transaction.commit()
+        }
+
+        logoutBtn.setOnClickListener {
+            val sharedPreferences = requireActivity().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.remove("userId")
+            editor.apply()
+
+            val intent = Intent(context, LoginActivity::class.java)
+            startActivity(intent)
+            activity?.finish()
         }
 
         return view
