@@ -35,6 +35,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 }
 
@@ -47,6 +48,10 @@ dependencies {
     // OkHttp
     implementation ("com.squareup.okhttp3:okhttp:4.10.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.10.0")
+
+    // viewmodel & live data
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

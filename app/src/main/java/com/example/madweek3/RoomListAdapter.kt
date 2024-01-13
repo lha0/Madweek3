@@ -10,7 +10,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.madweek3.APIservice
 
-class RoomListAdapter(private val context: Context, private val dataList: List<Room>) :
+class RoomListAdapter(private val context: Context, private var dataList: List<Room>) :
     RecyclerView.Adapter<RoomListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,5 +40,11 @@ class RoomListAdapter(private val context: Context, private val dataList: List<R
         val roomName: TextView = itemView.findViewById(R.id.roomName)
         val numPeople: TextView = itemView.findViewById(R.id.numPeople)
         val privateSetButton: ImageView = itemView.findViewById(R.id.privateSetButton)
+    }
+
+
+    fun updateData(newDataList: List<Room>) {
+        dataList = newDataList
+        notifyDataSetChanged()
     }
 }

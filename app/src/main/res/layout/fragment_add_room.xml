@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddRoomFragment"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <EditText
+        android:id="@+id/roomName_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="방 제목을 입력해주세요."
+        android:layout_margin="10sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10sp">
+
+        <CheckBox
+            android:id="@+id/checkBox_privateLock"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="방 비밀번호"
+            android:checked="false"/>
+
+        <EditText
+            android:id="@+id/passwordLock_editText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"/>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+        <Button
+            android:id="@+id/backButton_toRoomList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="5sp"
+            android:text="뒤로 가기"/>
+
+        <Button
+            android:id="@+id/confirmButton_toMakeRoom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="5sp"
+            android:text="방 만들기"/>
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

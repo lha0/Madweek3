@@ -21,6 +21,12 @@ interface APIservice {
     @GET("/user/{id}")
     suspend fun getUserInfo(@Path("id") id: String): Response<User>
 
+    @GET("/getAllRooms")
+    fun getAllRooms(): Call<List<Room>>
+
+    @POST("/addNewRoom")
+    fun addNewRoom(@Body roomData: Room): Call<UserResponse>
+
 }
 
 data class User(
@@ -32,7 +38,7 @@ data class User(
 )
 
 data class Room (
-    val roomId: String, //파이썬에서 랜덤 문자열 생성 -> 6글자
+    val roomId: String="", //파이썬에서 랜덤 문자열 생성 -> 6글자
     val roomName: String,
     val numPeople: Int,
     val privateLock: Boolean,
