@@ -40,6 +40,9 @@ class MainActivity : AppCompatActivity() {
                 // ViewModel에 소켓 설정
                 socketViewModel.socket = socket
 
+                //socket connection
+                socket.connect()
+
             } catch (e: URISyntaxException) {
                 e.printStackTrace()
             }

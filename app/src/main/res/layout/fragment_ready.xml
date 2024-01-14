@@ -51,6 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="100sp"
             android:layout_marginRight="100sp"
+            android:enabled="false"
             android:text="시작하기"/>
 
         <Button
@@ -61,5 +62,27 @@
             android:layout_marginLeft="100sp"
             android:layout_marginRight="100sp"
             android:text="준비하기"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="준비한 유저 수: "
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/numCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="0"
+                    />
+
+        </LinearLayout>
+
+
 
 </LinearLayout>

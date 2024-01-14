@@ -43,7 +43,6 @@ interface APIservice {
     @POST("/deleteRoomMember/{roomId}")
     fun deleteRoomMember(@Body my_userId: String, @Path("roomId") roomId: String): Call<UserResponse>
 
-
 }
 
 @Parcelize
