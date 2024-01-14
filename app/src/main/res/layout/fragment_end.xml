@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/end_container"
+    android:orientation="vertical"
     tools:context=".EndFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:layout_marginTop="50sp"
+        android:text="게임 결과"
+        android:textSize="30sp"
+        android:gravity="center"/>
+    
+    <ListView
+        android:id="@+id/result_list"
+        android:layout_width="match_parent"
+        android:layout_height="400sp"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:layout_marginTop="30sp"/>
 
-</FrameLayout>
+    <Button
+        android:id="@+id/againBtn"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:layout_marginTop="50sp"
+        android:text="다시하기"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        />
+    
+    <Button
+        android:id="@+id/outBtn"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:layout_marginTop="10sp"
+        android:text="방 나가기"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_gravity="center" />
+
+
+</LinearLayout>
