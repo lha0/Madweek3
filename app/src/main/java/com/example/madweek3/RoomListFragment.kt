@@ -39,8 +39,23 @@ class RoomListFragment : Fragment() {
             Room(roomId = "EX56KW", roomName = "컴온~", numPeople = 2, privateLock = false, passwordLock = "", userList = mutableListOf("k","l")),
             // 추가적인 User 객체들을 필요에 따라 추가할 수 있습니다.
         )
-
         adapter = RoomListAdapter(requireContext(), roomList)
+        adapter.setOnItemClickListener{ selectedItem ->
+            val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+            val readyFragment = ReadyFragment()
+            val bundle = Bundle()
+            bundle.putString("roomId", selectedItem.roomId.toString())
+
+            readyFragment.arguments = bundle
+
+            // Fragment 전환
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container, readyFragment)
+                .addToBackStack(null)
+                .commit()
+        }
+
+
         recyclerView.adapter = adapter
 
 
