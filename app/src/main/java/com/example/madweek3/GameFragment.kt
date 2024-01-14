@@ -56,9 +56,6 @@ class GameFragment : Fragment() {
         // SocketViewModel 초기화
         socketViewModel = ViewModelProvider(requireActivity()).get(SocketViewModel::class.java)
 
-        // ViewModel에서 소켓 가져오기
-        val socket = socketViewModel.socket
-
         chat_recycler.adapter = chatAdapter
         chat_recycler.layoutManager = LinearLayoutManager(context)
 
@@ -71,13 +68,19 @@ class GameFragment : Fragment() {
             addMessage(messageClass)
         }
 
-        socketViewModel.socket?.on("get message") {args ->
+        socketViewModel.socket.on("get message") {args ->
             val data = args[0] as JSONObject
             val otherUserId = data.getString("userId").toString()
-            val message = data.getString("message").toString()
-            val userName = findName(otherUserId) ?:"상대방"
-            val messageClass = ChatMessage(message, userName, false)
-            addMessage(messageClass)
+            if (otherUserId != loggedInUserId){
+                val messageObject = data.getJSONObject("message")
+                val message = messageObject.getString("message")
+                val userName = findName(otherUserId) ?:"상대방"
+                val messageClass = ChatMessage(message, userName, false)
+                activity?.runOnUiThread {
+                    addMessage(messageClass)
+                }
+            }
+
         }
 
         //addMessage(ChatMessage("안녕하세요", "하영", true))
