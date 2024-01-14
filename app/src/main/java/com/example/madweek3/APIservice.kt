@@ -36,8 +36,6 @@ interface APIservice {
 
     @GET("/getRoomMember/{roomId}")
     suspend fun getRoomMember(@Path("roomId") roomId: String): Response<ArrayList<User>>
-
-
 }
 
 @Parcelize
