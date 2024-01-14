@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 // 소켓 생성
-                val socket = IO.socket("http:/54.180.125.145:5000/")
+                val socket = IO.socket("http://54.180.125.145:5000/")
 
                 // ViewModel에 소켓 설정
                 socketViewModel.socket = socket

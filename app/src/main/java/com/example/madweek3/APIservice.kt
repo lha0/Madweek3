@@ -32,6 +32,9 @@ interface APIservice {
     @POST("/mypageModify/{id}")
     fun modifyInfo(@Body userInfo: User, @Path("id") id:String): Call<UserResponse>
 
+    @GET("/getRoomMember/{roomId}")
+    suspend fun getRoomMember(@Path("roomId") roomId: String): Response<List<User>>
+
 
 }
 
