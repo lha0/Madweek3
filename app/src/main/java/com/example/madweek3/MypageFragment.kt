@@ -52,7 +52,6 @@ class MypageFragment : Fragment() {
         lifecycleScope.launch {
             val getUserInfoDeferred = async { getInfo() }
             getUserInfoDeferred.await()
-            println("nickname" + userNickname)
             setUpUI()
         }
 

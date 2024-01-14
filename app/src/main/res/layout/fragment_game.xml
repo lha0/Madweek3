@@ -125,6 +125,7 @@
         android:gravity="center"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatroom"
         android:layout_width="match_parent"
         android:layout_height="350sp"
         android:layout_marginLeft="20sp"
@@ -167,6 +168,7 @@
         android:layout_marginTop="10sp">
 
         <EditText
+            android:id="@+id/chat_editText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
@@ -174,6 +176,7 @@
             android:hint="입력하세요."/>
 
         <Button
+            android:id="@+id/chat_sendBtn"
             android:layout_width="0dp"
             android:layout_height="50sp"
             android:text="g"

@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         // SocketViewModel 초기화
         socketViewModel = ViewModelProvider(this).get(SocketViewModel::class.java)
 
+        println("start1")
         // 소켓 생성 및 ViewModel에 설정
         createSocket()
 
@@ -34,13 +35,10 @@ class MainActivity : AppCompatActivity() {
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 // 소켓 생성
-                val socket = IO.socket("http:/54.180.125.145:5000/")
+                val socket = IO.socket("http://54.180.125.145:5000/")
 
                 // ViewModel에 소켓 설정
                 socketViewModel.socket = socket
-
-                // 통신 시작 등의 작업 수행
-                // ...
 
             } catch (e: URISyntaxException) {
                 e.printStackTrace()
