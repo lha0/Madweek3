@@ -29,13 +29,20 @@ interface APIservice {
     fun getAllRooms(): Call<List<Room>>
 
     @POST("/addNewRoom")
-    fun addNewRoom(@Body roomData: Room): Call<UserResponse>
+    suspend fun addNewRoom(@Body roomData: Room): Response<UserResponse>
 
     @POST("/mypageModify/{id}")
     fun modifyInfo(@Body userInfo: User, @Path("id") id:String): Call<UserResponse>
 
     @GET("/getRoomMember/{roomId}")
     suspend fun getRoomMember(@Path("roomId") roomId: String): Response<ArrayList<User>>
+
+    @POST("/addRoomMember/{roomId}")
+    suspend fun addRoomMember(@Body userId: String, @Path("roomId") roomId: String): Response<UserResponse>
+
+    @POST("/deleteRoomMember/{roomId}")
+    fun deleteRoomMember(@Body my_userId: String, @Path("roomId") roomId: String): Call<UserResponse>
+
 }
 
 @Parcelize
@@ -53,6 +60,7 @@ data class Room (
     val numPeople: Int,
     val privateLock: Boolean,
     val passwordLock: String,
-    val userList: List<String>, //email로 이용
+    val userList: List<String>, //userid로 이용
+    val roomLeader: String,
 )
 data class UserResponse(val message: String, val UID: Int = -1)

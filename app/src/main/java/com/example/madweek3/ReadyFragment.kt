@@ -18,10 +18,15 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.w3c.dom.Text
+import android.widget.Toast
+import androidx.fragment.app.FragmentManager
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.lang.Exception
 
 class ReadyFragment : Fragment() {
-    private lateinit var userList : ArrayList<User>
+
     private lateinit var currentRoom: Room
     private lateinit var readyBtn: Button
     private lateinit var gameStartBtn: Button
@@ -31,6 +36,7 @@ class ReadyFragment : Fragment() {
     private lateinit var roomId: String
     private var adapterCount: Int = 0
     private var isReady = false
+    private var userList: ArrayList<User>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,25 +61,42 @@ class ReadyFragment : Fragment() {
         socketViewModel = ViewModelProvider(requireActivity()).get(SocketViewModel::class.java)
         socketViewModel.joinRoom(roomId, userId)
 
+        val backButton_toRoomList = view.findViewById<Button>(R.id.BackBtn)
+        gameStartBtn = view.findViewById(R.id.startBtn)
+
+        //나의 userId 얻어오기
+        val sharedPreferences = requireActivity().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        val my_userId = sharedPreferences.getString("userId", "")?:""
+
         if (roomId != null) {
             Log.d("test", roomId)
             lifecycleScope.launch {
-                val getUserInfoDeferred = async { getRoomMember(roomId) }
-                getUserInfoDeferred.await()
+                val getRoomMember = async { getRoomMember(roomId) }
+                getRoomMember.await()
+                if (userList!=null){
+                    val gridView_userList = view.findViewById<GridView>(R.id.userList)
 
-                val gridView_userList = view.findViewById<GridView>(R.id.userList)
-
-                val gridViewAdapter = ReadyAdapter(requireContext(), userList)
-                adapterCount = gridViewAdapter.count
-                // GridView에 Adapter 설정
-                gridView_userList.adapter = gridViewAdapter
+                    val gridViewAdapter = ReadyAdapter(requireContext(), userList!!)
+                    adapterCount = gridViewAdapter.count
+                    // GridView에 Adapter 설정
+                    gridView_userList.adapter = gridViewAdapter
+                }
+                else {
+                    Log.d("test", "userList is null")
+                }
             }
+            //뒤로 가기 버튼 누르면 UserList에서 해당 유저가 지워지도록 한다.
+            backButton_toRoomList.setOnClickListener {
+                deleteMyUserId(my_userId, roomId)
+            }
+
         } else {
             Log.d("test", "roomId is null")
         }
 
 //        val testuser1 = User(email = "1234",password="1234",nickname="sechan",level ="킹받게 멋진 세찬",score=720)
 //        val testuser2 = User(email="456", password = "456", nickname="hayeong",level="새싹 세찬", score=350)
+
 
 
 
@@ -154,6 +177,39 @@ class ReadyFragment : Fragment() {
         } catch(e: Exception) {
             Log.e("Get RoomMember Error", "error: ${e.localizedMessage}}")
         }
+    }
+
+    fun deleteMyUserId(my_userId: String, current_roomId: String) {
+        RetrofitClient.instance.deleteRoomMember(my_userId, current_roomId)
+            .enqueue(object : Callback<UserResponse> {
+                override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                    if (response.isSuccessful && response.body() != null) {
+                        if (response.body()!!.UID ==200 ) {
+                            Log.d("CHECK_READYFRAGMENT",response.body()!!.message)
+                            val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+                            // popBackStack 호출로 최상위 Fragment를 제거
+                            fragmentManager.popBackStack()
+
+                        }
+                        else {
+                            Log.d("CHECK_READYFRAGMENT",response.body()!!.message)
+                            Toast.makeText(context, "다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                        }
+
+
+
+
+                    } else {
+                        Toast.makeText(context, "다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+
+                    }
+                }
+
+                override fun onFailure(call: Call<UserResponse>, t:Throwable) {
+                    Log.e("error", t.toString())
+                    Toast.makeText(context, "네트워크 오류: 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 
 }
