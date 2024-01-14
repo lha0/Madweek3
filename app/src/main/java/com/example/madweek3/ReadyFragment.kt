@@ -1,11 +1,13 @@
 package com.example.madweek3
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.GridView
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.async
@@ -13,8 +15,9 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class ReadyFragment : Fragment() {
-    private lateinit var userList : List<User>
+    private lateinit var userList : ArrayList<User>
     private lateinit var currentRoom: Room
+    private lateinit var gameStartBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +30,7 @@ class ReadyFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_ready, container, false)
+        gameStartBtn = view.findViewById(R.id.startBtn)
 
         // 현재 방의 roomId 받아오기
         val roomId = arguments?.getString("roomId")
@@ -52,8 +56,12 @@ class ReadyFragment : Fragment() {
 //        val testuser2 = User(email="456", password = "456", nickname="hayeong",level="새싹 세찬", score=350)
 
 
-
-
+        gameStartBtn.setOnClickListener {
+            val intent = Intent(requireActivity(), GameActivity::class.java)
+            intent.putExtra("roomId", roomId)
+            intent.putParcelableArrayListExtra("userList", userList)
+            startActivity(intent)
+        }
 
         return view
     }

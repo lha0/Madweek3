@@ -16,6 +16,10 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.game_container, GameFragment())
+            .commit()
+
     }
 
 }

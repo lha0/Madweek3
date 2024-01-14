@@ -1,5 +1,7 @@
 package com.example.madweek3
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
@@ -33,18 +35,19 @@ interface APIservice {
     fun modifyInfo(@Body userInfo: User, @Path("id") id:String): Call<UserResponse>
 
     @GET("/getRoomMember/{roomId}")
-    suspend fun getRoomMember(@Path("roomId") roomId: String): Response<List<User>>
+    suspend fun getRoomMember(@Path("roomId") roomId: String): Response<ArrayList<User>>
 
 
 }
 
-data class User(
+@Parcelize
+class User(
     val email: String,
     val password: String,
     val nickname: String,
     val level: String="새싹 세찬이",
     val score: Int=0
-)
+) : Parcelable
 
 data class Room (
     val roomId: String="", //파이썬에서 랜덤 문자열 생성 -> 6글자

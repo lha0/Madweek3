@@ -43,6 +43,9 @@ class GameFragment : Fragment() {
 
         addMessage(ChatMessage("안녕하세요", "하영", true))
         addMessage(ChatMessage("안녕하세요", "상대", false))
+        addMessage(ChatMessage("양세찬입니다.", "상대", false))
+        addMessage(ChatMessage("유재석입니다.", "상대", false))
+        addMessage(ChatMessage("김종국입니다.", "상대", false))
 
 
         // SocketViewModel 초기화
