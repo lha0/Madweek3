@@ -7,14 +7,31 @@
     android:orientation="vertical"
     tools:context=".ReadyFragment">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20sp"
             android:layout_marginRight="20sp"
-            android:layout_marginTop="20sp"
-            android:text="방 제목"
-            android:textSize="20sp"/>
+            android:layout_marginTop="20sp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+
+                    android:text="방 제목"
+                    android:textSize="20sp"/>
+
+                <Button
+                    android:id="@+id/BackBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="나가기"
+                    />
+
+        </LinearLayout>
+
+
 
         <GridView
             android:id="@+id/userList"
@@ -39,12 +56,12 @@
             android:text="시작하기"/>
 
         <Button
-            android:id="@+id/returnBtn"
+            android:id="@+id/readyBtn"
             android:layout_marginTop="5sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="100sp"
             android:layout_marginRight="100sp"
-            android:text="방 나가기"/>
+            android:text="준비하기"/>
 
 </LinearLayout>
