@@ -31,8 +31,6 @@
 
         </LinearLayout>
 
-
-
         <GridView
             android:id="@+id/userList"
             android:layout_width="match_parent"
