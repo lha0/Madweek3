@@ -19,7 +19,9 @@ class SocketViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun leaveRoom(roomId: String) {
-        socket.emit("leave", roomId)
+        val data = JSONObject()
+        data.put("roomId", roomId)
+        socket.emit("leave", data)
     }
 
     fun userReady(roomId: String, userId: String, totalNum: Int) {

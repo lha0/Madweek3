@@ -111,6 +111,7 @@ class ReadyFragment : Fragment() {
             //뒤로 가기 버튼 누르면 UserList에서 해당 유저가 지워지도록 한다.
             backButton_toRoomList.setOnClickListener {
                 deleteMyUserId(my_userId, roomId)
+                socketViewModel.leaveRoom(roomId)
             }
 
         } else {
@@ -120,8 +121,13 @@ class ReadyFragment : Fragment() {
 //        val testuser1 = User(email = "1234",password="1234",nickname="sechan",level ="킹받게 멋진 세찬",score=720)
 //        val testuser2 = User(email="456", password = "456", nickname="hayeong",level="새싹 세찬", score=350)
 
-
-
+        socketViewModel.socket.on("leave success") {args ->
+            activity?.runOnUiThread {
+                val removePosition = userList!!.size-1
+                userList!!.removeAt(removePosition)
+                gridViewAdapter.notifyDataSetChanged()
+            }
+        }
 
         return view
     }
@@ -241,9 +247,7 @@ class ReadyFragment : Fragment() {
                     if (response.isSuccessful && response.body() != null) {
                         if (response.body()!!.UID ==200 ) {
                             // test 하기 전
-                            val removePosition = userList!!.size-1
-                            userList!!.removeAt(removePosition)
-                            gridViewAdapter.notifyDataSetChanged()
+
                             Log.d("CHECK_READYFRAGMENT",response.body()!!.message)
                             val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
                             // popBackStack 호출로 최상위 Fragment를 제거
