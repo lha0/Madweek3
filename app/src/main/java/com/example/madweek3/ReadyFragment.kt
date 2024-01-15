@@ -32,6 +32,7 @@ class ReadyFragment : Fragment() {
     private lateinit var gameStartBtn: Button
     private lateinit var readyUserView: TextView
     private lateinit var socketViewModel: SocketViewModel
+    private lateinit var gridViewAdapter: ReadyAdapter
     private lateinit var userId: String
     private lateinit var roomId: String
     private var adapterCount: Int = 0
@@ -49,6 +50,7 @@ class ReadyFragment : Fragment() {
         // 현재 방의 roomId 받아오기
         roomId = arguments?.getString("roomId")?:""
 
+
     }
 
     override fun onCreateView(
@@ -58,8 +60,22 @@ class ReadyFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_ready, container, false)
 
+        val loggedInUserId = userId
         socketViewModel = ViewModelProvider(requireActivity()).get(SocketViewModel::class.java)
         socketViewModel.joinRoom(roomId, userId)
+        socketViewModel.socket.on("join success") { args->
+            Log.d("socket test", "join success")
+            val data = args[0] as JSONObject
+            val otherUserId = data.getString("userId").toString()
+            if (otherUserId != loggedInUserId) {
+                Log.d("socket test", "member update")
+                lifecycleScope.launch {
+                    val updateRoomMember = async { updateRoomMember(otherUserId) }
+                    updateRoomMember.await()
+                }
+            }
+
+        }
 
         val backButton_toRoomList = view.findViewById<Button>(R.id.BackBtn)
         gameStartBtn = view.findViewById(R.id.startBtn)
@@ -76,7 +92,7 @@ class ReadyFragment : Fragment() {
                 if (userList!=null){
                     val gridView_userList = view.findViewById<GridView>(R.id.userList)
 
-                    val gridViewAdapter = ReadyAdapter(requireContext(), userList!!)
+                    gridViewAdapter = ReadyAdapter(requireContext(), userList!!)
                     adapterCount = gridViewAdapter.count
                     // GridView에 Adapter 설정
                     gridView_userList.adapter = gridViewAdapter
@@ -176,6 +192,31 @@ class ReadyFragment : Fragment() {
 
         } catch(e: Exception) {
             Log.e("Get RoomMember Error", "error: ${e.localizedMessage}}")
+        }
+    }
+
+    suspend fun updateRoomMember(otherUserId: String) {
+        try {
+            val response = RetrofitClient.instance.getUserInfo(otherUserId)
+            if (response.isSuccessful && response.body() != null) {
+                val userNickname = response.body()!!.nickname
+                val userEmail = response.body()!!.email
+                val userPW = response.body()!!.password
+                val userLevel = response.body()!!.level
+                val userScore = response.body()!!.score
+                val otherUser = User(
+                    email = userEmail,
+                    password = userPW,
+                    nickname = userNickname,
+                    level = userLevel,
+                    score = userScore
+                )
+                userList!!.add(otherUser)
+                gridViewAdapter.notifyDataSetChanged()
+            }
+
+        } catch (e: Exception) {
+            Log.e("Update RoomMember Error", "error: ${e.localizedMessage}}")
         }
     }
 

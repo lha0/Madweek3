@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-class ReadyAdapter(private val context: Context, private val userList: List<User>) : BaseAdapter(){
+class ReadyAdapter(private val context: Context, private var userList: MutableList<User>) : BaseAdapter(){
 
     // getCount 메서드는 Adapter에 표시할 아이템의 총 개수를 반환합니다.
     override fun getCount(): Int {
@@ -52,4 +52,5 @@ class ReadyAdapter(private val context: Context, private val userList: List<User
         val ready_userId = view.findViewById<TextView>(R.id.ready_userId)
         val ready_userLevel = view.findViewById<TextView>(R.id.ready_userLevel)
     }
+
 }
