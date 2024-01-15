@@ -1,10 +1,12 @@
 package com.example.madweek3
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import io.socket.client.Socket
+import org.json.JSONArray
 import org.json.JSONObject
 
 class SocketViewModel(application: Application) : AndroidViewModel(application) {
@@ -68,6 +70,15 @@ class SocketViewModel(application: Application) : AndroidViewModel(application) 
         data.put("roomId", roomId)
         data.put("whichClicked", whichClicked)
         socket.emit("user action", data)
+    }
+
+    fun assign_keywords(users: List<String>, roomId: String) {
+        val data = JSONObject()
+        val json_users = JSONArray(users)
+        data.put("usersId", json_users)
+        data.put("roomId", roomId)
+        Log.d("socket_io test", "$roomId")
+        socket.emit("assign keywords", data)
     }
 
 }
