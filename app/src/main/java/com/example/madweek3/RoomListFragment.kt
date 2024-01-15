@@ -23,7 +23,7 @@ class RoomListFragment : Fragment() {
 
     private lateinit var viewModel: RoomListViewModel
     private lateinit var adapter: RoomListAdapter
-    private lateinit var roomList: List<Room>
+    private var roomList: List<Room> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +40,7 @@ class RoomListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         viewModel = ViewModelProvider(this).get(RoomListViewModel::class.java)
 
-        val roomList: List<Room> = listOf(
+        val temproomList: List<Room> = listOf(
             Room(roomId = "EX34KW", roomName = "아무나 들어오세요~", numPeople = 3, privateLock = true, passwordLock = "1234", userList = mutableListOf("h","i","j"), roomLeader = "65a120d15dc3f4e4c06d2977"),
             Room(roomId = "EX56KW", roomName = "컴온~", numPeople = 2, privateLock = false, passwordLock = "", userList = mutableListOf("k","l"),roomLeader="65a120d15dc3f4e4c06d2977"),
             // 추가적인 User 객체들을 필요에 따라 추가할 수 있습니다.
@@ -51,7 +51,7 @@ class RoomListFragment : Fragment() {
             val sharedPreferences = requireActivity().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
             val userId = sharedPreferences.getString("userId", "")?:""
             if (userId.isNotEmpty()) {
-                Log.d("test", "userId: $userId")
+                Log.d("test", "userId: $userId, roomId: ${selectedItem.roomId}")
                 lifecycleScope.launch {
 
                     val current_roomId = selectedItem.roomId.toString()

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.json.JSONArray
 import org.json.JSONObject
 import java.util.Timer
 import kotlin.concurrent.schedule
@@ -26,6 +27,9 @@ class GameFragment : Fragment() {
     private lateinit var roomId: String
     private lateinit var loggedInUserId: String
     private lateinit var userList: ArrayList<User>
+    private lateinit var currentRoom: Room
+    private var roomLeaderId = "65a11a945dc3f4e4c06d2976"
+    private var my_keyword = ""
 
     private lateinit var socketViewModel: SocketViewModel
     private lateinit var chatting_text: EditText
@@ -54,19 +58,15 @@ class GameFragment : Fragment() {
 
             println("userList[0].id is " + userList[0]._id)
             println("userList[1].id is " + userList[1]._id)
+
         }
+        println("roomId in gameFragment" + roomId)
 
         val sharedPreferences = requireActivity().getSharedPreferences("MySharedPref",
             Context.MODE_PRIVATE
         )
         loggedInUserId = sharedPreferences.getString("userId", "")?:""
 
-        lifecycleScope.launch {
-            val getRoomInfo = async { getRoomInfo(roomId) }
-            getRoomInfo.await()
-
-            roomLeaderId = currentRoom.roomLeader
-        }
     }
 
     override fun onCreateView(
@@ -82,6 +82,27 @@ class GameFragment : Fragment() {
 
         // SocketViewModel 초기화
         socketViewModel = ViewModelProvider(requireActivity()).get(SocketViewModel::class.java)
+
+
+        lifecycleScope.launch {
+            val getRoomInfo = async { getRoomInfo(roomId) }
+            getRoomInfo.await()
+            println("loggedInUserId: "+loggedInUserId + ", roomLeaderId: " + roomLeaderId)
+            if (loggedInUserId == roomLeaderId) {
+                val ids_ofUserList = userList.map { it._id }
+                println("ids_ofUserList: "+ ids_ofUserList)
+                socketViewModel.assign_keywords(ids_ofUserList, roomId)
+            }
+
+        }
+
+
+        socketViewModel.socket.on("assign keywords success"){args ->
+            val data = args[0] as JSONObject // keyword
+            println("assigned keywords" + data)
+            my_keyword = data.getString(loggedInUserId)
+            Log.d("socket_io test", my_keyword)
+        }
 
         chat_recycler.adapter = chatAdapter
         chat_recycler.layoutManager = LinearLayoutManager(context)
@@ -192,6 +213,26 @@ class GameFragment : Fragment() {
         waitDialog = WaitDialog(requireContext()).apply {
             socketViewModel.select(roomId, currentUserIndex)
             start()
+        }
+    }
+
+    private suspend fun getRoomInfo(id: String) {
+        try {
+            val response = RetrofitClient.instance.getRoomInfo(id)
+            println("response is successful: "+ response.isSuccessful)
+            println("response body: "+ response.body())
+            if (response.isSuccessful && response.body() != null) {
+                println(currentRoom.toString())
+                currentRoom = response.body()!!
+                roomLeaderId = currentRoom.roomLeader
+            }
+
+            else {
+                println("else case" + response.body())
+            }
+        } catch(e: Exception) {
+            val error_message = e.toString()
+            Log.d("Get room error", "room 을 받아오지 못했음: $error_message")
         }
     }
 
