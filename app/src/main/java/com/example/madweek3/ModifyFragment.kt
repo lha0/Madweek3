@@ -73,6 +73,7 @@ class ModifyFragment : Fragment() {
 
     private fun modifyInfo() {
         val sendInfo = User(
+            _id = "",
             email = if (EmailToServer.isNotEmpty()) EmailToServer else "",
             password = if (PasswordToServer.isNotEmpty()) PasswordToServer else "",
             nickname = if (NicknameToServer.isNotEmpty()) NicknameToServer else "",
