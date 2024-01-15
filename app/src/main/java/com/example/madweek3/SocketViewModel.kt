@@ -58,20 +58,6 @@ class SocketViewModel(application: Application) : AndroidViewModel(application) 
         socket.emit("game start", data)
     }
 
-    fun nextUser(roomId: String, userIndex: Int) {
-        val data = JSONObject()
-        data.put("roomId", roomId)
-        data.put("userIndex", userIndex)
-        socket.emit("next user", data)
-    }
-
-    fun select(roomId: String, userIndex: Int) {
-        val data = JSONObject()
-        data.put("roomId", roomId)
-        data.put("userIndex", userIndex)
-        socket.emit("user action", data)
-    }
-
     fun assign_keywords(users: List<String>, roomId: String) {
         val data = JSONObject()
         val json_users = JSONArray(users)
