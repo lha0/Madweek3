@@ -226,6 +226,10 @@ class ReadyFragment : Fragment() {
                 override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                     if (response.isSuccessful && response.body() != null) {
                         if (response.body()!!.UID ==200 ) {
+                            // test 하기 전
+                            val removePosition = userList!!.size-1
+                            userList!!.removeAt(removePosition)
+                            gridViewAdapter.notifyDataSetChanged()
                             Log.d("CHECK_READYFRAGMENT",response.body()!!.message)
                             val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
                             // popBackStack 호출로 최상위 Fragment를 제거
