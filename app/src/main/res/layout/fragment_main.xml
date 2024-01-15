@@ -97,6 +97,12 @@
         android:orientation="horizontal"
         android:gravity="end">
 
+        <Button
+            android:id="@+id/EndFragmentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EndFragment"/>
+
         <LinearLayout
             android:id="@+id/RankingButton"
             android:layout_width="wrap_content"

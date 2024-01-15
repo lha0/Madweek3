@@ -45,6 +45,9 @@ interface APIservice {
 
     @GET("/room/{roomId}")
     suspend fun getRoomInfo(@Path("roomId") roomId: String): Response<Room>
+
+    @POST("/getFinishUserInfo")
+    suspend fun getFinishUserInfo(@Body finish_list: List<String>): Response<ArrayList<User>>
 }
 
 @Parcelize
