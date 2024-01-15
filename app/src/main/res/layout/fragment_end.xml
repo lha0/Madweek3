@@ -18,8 +18,16 @@
         android:textSize="30sp"
         android:gravity="center"/>
     
-    <ListView
-        android:id="@+id/result_list"
+<!--    <ListView-->
+<!--        android:id="@+id/result_list"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="400sp"-->
+<!--        android:layout_marginLeft="20sp"-->
+<!--        android:layout_marginRight="20sp"-->
+<!--        android:layout_marginTop="30sp"/>-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_result_list"
         android:layout_width="match_parent"
         android:layout_height="400sp"
         android:layout_marginLeft="20sp"

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
 
 class MainFragment : Fragment() {
@@ -28,6 +29,7 @@ class MainFragment : Fragment() {
         val searchRoomButton = view.findViewById<LinearLayout>(R.id.RoomSearchButton)
         val mypageBtn = view.findViewById<LinearLayout>(R.id.MypageButton)
         val logoutBtn = view.findViewById<LinearLayout>(R.id.logoutButton)
+        val endFragmentButton = view.findViewById<Button>(R.id.EndFragmentButton)
 
         rankingButton.setOnClickListener {
             val rankingFragment = RankingFragment()
@@ -70,6 +72,15 @@ class MainFragment : Fragment() {
             val intent = Intent(context, LoginActivity::class.java)
             startActivity(intent)
             activity?.finish()
+        }
+
+        endFragmentButton.setOnClickListener {
+            //EndFragment로 연결되도록 추가
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.main_container, EndFragment())
+            transaction.addToBackStack(null)
+            transaction.commit()
+
         }
 
         return view

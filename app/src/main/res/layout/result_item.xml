@@ -1,35 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_margin="8dp"
+app:cardCornerRadius="8dp"
+app:cardElevation="4dp"
+app:cardUseCompatPadding="true"
+android:id="@+id/Ranking_cardView_item">
+
+<!-- 카드 내부에 들어갈 레이아웃과 컨텐츠 추가 -->
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16sp"
+    android:layout_gravity="center_vertical">
 
     <TextView
-        android:id="@+id/resultRank"
-        android:layout_width="0dp"
-        android:layout_height="50sp"
-        android:layout_weight="1"
-        android:text="1"
-        android:textSize="20sp"
-        android:gravity="center"
-        />
-
-    <TextView
-        android:id="@+id/resultName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="5"
-        android:text="User1"
-        android:textSize="20sp"
-        />
-
-    <TextView
-        android:id="@+id/resultScore"
+        android:id="@+id/result_EndFragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="+ 10"
-        android:textSize="20sp"
-        android:gravity="center"
-        />
+        android:text="rank"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
 
+    <TextView
+        android:id="@+id/nickName_EndFragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="6"
+        android:gravity="center"
+        android:text="User Name"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:text="+"
+        android:gravity="right"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/point_EndFragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="Point"
+        android:gravity="center"
+        android:textSize="16sp"/>
 </LinearLayout>
+</androidx.cardview.widget.CardView>
