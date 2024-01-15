@@ -130,22 +130,7 @@ class GameFragment : Fragment() {
 
         }
 
-        socketViewModel.socket.on("next user") {args ->
-            println("socket next user on 실행")
-            val newIndex = args[0] as Int
-            currentUserIndex = newIndex
-        }
 
-        socketViewModel.socket.on("user action") {args ->
-            println("socket user action 실행")
-            activity?.runOnUiThread {
-                answerDialog?.dismissDialog()
-                waitDialog?.dismissDialog()
-                startTimer()
-            }
-        }
-
-        startTimer()
         return view
     }
 
@@ -156,62 +141,6 @@ class GameFragment : Fragment() {
 
     fun findName(userId: String): String? {
         return userList.find { it.nickname == userId }?.nickname
-    }
-
-    private fun startTimer() {
-        timer?.cancel()
-        timer = Timer()
-
-        println("in startTimer" + currentUserIndex)
-
-        timer?.schedule(300000) {
-            activity?.runOnUiThread {
-                if (currentUserIndex < userList.size) {
-                    updateDialogsForCurrentUser()
-                }
-                println("userindex 업데이트")
-                nextUserIndex = (currentUserIndex + 1) % userList.size
-                socketViewModel.nextUser(roomId, nextUserIndex)
-            }
-
-        }
-    }
-
-    private fun updateDialogsForCurrentUser() {
-        println("update dialog 실행")
-        println("current User Index " + currentUserIndex)
-        println("userList[currentUserIndex] id " + userList[currentUserIndex]._id )
-        println("loggedInUserId " + loggedInUserId)
-        if (userList[currentUserIndex]._id == loggedInUserId) {
-            showAnswerDialog("다음 차례입니다.")
-        } else {
-            showWaitDialog()
-        }
-    }
-
-    private fun showAnswerDialog(message: String) {
-        println("show answer dialog 실행 ")
-        answerDialog = AnswerDialog(requireContext()).apply {
-            setOnQuestionClickedListener {
-                socketViewModel.select(roomId, currentUserIndex)
-                dismissDialog()
-            }
-
-            setOnAnswerClickedListener {
-                socketViewModel.select(roomId, currentUserIndex)
-                dismissDialog()
-            }
-            start(message)
-
-        }
-    }
-
-    private fun showWaitDialog() {
-        println("show wait dialog 실행")
-        waitDialog = WaitDialog(requireContext()).apply {
-            socketViewModel.select(roomId, currentUserIndex)
-            start()
-        }
     }
 
     override fun onDestroyView() {
