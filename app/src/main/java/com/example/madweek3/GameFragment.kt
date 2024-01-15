@@ -13,13 +13,28 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.json.JSONArray
 import org.json.JSONObject
+import java.security.Key
 import java.util.Timer
 import kotlin.concurrent.schedule
 
+data class Keyword (
+    val _id: String,
+    val keyword: String
+)
+
+
+
 class GameFragment : Fragment() {
+    //view
+    private lateinit var userRecyclerView: RecyclerView
+    private lateinit var userAdapter: GameUserAdapter
+    private lateinit var userKeywords: List<UserKeyword>
+
     private lateinit var currentRoom: Room
     private lateinit var roomLeaderId: String
 
@@ -35,7 +50,15 @@ class GameFragment : Fragment() {
     private var messages: MutableList<ChatMessage> = mutableListOf()
 
     private lateinit var writedMessage: String
+
+    //정답 키워드
+    var ids_ofUserList: List<String> = listOf()
     private var my_keyword = ""
+    private lateinit var other_keywords: MutableList<Keyword>
+    private var active_users: MutableList<String> = mutableListOf()
+    private var finish_users: MutableList<String> = mutableListOf()
+    private lateinit var answerBtn: Button
+    private lateinit var userAnswerInput: String
 
 
     //타이머
@@ -53,9 +76,6 @@ class GameFragment : Fragment() {
             userList = it.getParcelableArrayList("userList")?:ArrayList()
 
             userList.sortBy { user -> user._id }
-
-            println("userList[0].id is " + userList[0]._id)
-            println("userList[1].id is " + userList[1]._id)
         }
 
         // SocketViewModel 초기화
@@ -72,12 +92,43 @@ class GameFragment : Fragment() {
 
             roomLeaderId = currentRoom.roomLeader
 
-            println("loggedInUserId: "+loggedInUserId + ", roomLeaderId: " + roomLeaderId)
-
             if (loggedInUserId == roomLeaderId) {
-                val ids_ofUserList = userList.map { it._id }
+                ids_ofUserList = userList.map { it._id }
                 println("ids_ofUserList: "+ ids_ofUserList)
                 socketViewModel.assign_keywords(ids_ofUserList, roomId)
+            }
+
+
+            socketViewModel.socket.on("assign keywords success"){args ->
+                val data = args[0] as JSONObject // 이것은 서버에서 받은 JSONObject입니다.
+                val usersJsonArray = JSONArray(data.getString("users"))
+                for (i in 0 until usersJsonArray.length()) {
+                    active_users.add(usersJsonArray.getString(i))
+                }
+                ids_ofUserList = active_users
+
+                val user_keywords = JSONObject(data.getString("user_keywords"))
+                my_keyword = user_keywords.getString(loggedInUserId)
+
+                other_keywords = mutableListOf() // Keyword 객체를 저장할 리스트를 생성합니다.
+
+                // JSONObject의 모든 키들에 대해 순회합니다.
+                val keys = user_keywords.keys()
+                while (keys.hasNext()) {
+                    val key = keys.next() as String
+                    if (key == loggedInUserId) {
+                        val keywordValue = user_keywords.getString(key) // 키워드 값을 추출합니다.
+                        val keywordObj = Keyword(key, keywordValue) // Keyword 객체를 생성합니다.
+                        other_keywords.add(keywordObj) // 생성된 객체를 리스트에 추가합니다.
+                    } else {
+                        continue
+                    }
+                }
+
+                println("other keyword is " + other_keywords)
+                setupUserRecyclerView()
+
+                Log.d("socket_io test", my_keyword)
             }
         }
     }
@@ -88,12 +139,14 @@ class GameFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_game, container, false)
+        answerBtn = view.findViewById(R.id.answerBtn)
         chatting_text = view.findViewById(R.id.chat_editText)
         chat_sendBtn = view.findViewById(R.id.chat_sendBtn)
         chat_recycler = view.findViewById(R.id.chatroom)
         chatAdapter = ChatAdapter(messages)
 
-
+        userRecyclerView = view.findViewById(R.id.user_view)
+        userRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         chat_recycler.adapter = chatAdapter
         chat_recycler.layoutManager = LinearLayoutManager(context)
@@ -108,12 +161,7 @@ class GameFragment : Fragment() {
             }
         }
 
-        socketViewModel.socket.on("assign keywords success"){args ->
-            val data = args[0] as JSONObject // keyword
-            println("assigned keywords" + data)
-            my_keyword = data.getString(loggedInUserId)
-            Log.d("socket_io test", my_keyword)
-        }
+
 
         socketViewModel.socket.on("get message") {args ->
             val data = args[0] as JSONObject
@@ -130,8 +178,63 @@ class GameFragment : Fragment() {
 
         }
 
+        answerBtn.setOnClickListener {
+            val dialog = AnswerDialog(requireContext())
+            dialog.setOnAnswerClickedListener { content ->
+                userAnswerInput = content
+                if (content == my_keyword) {
+                    socketViewModel.answerRight(roomId, loggedInUserId)
+                    dialog.dismissDialog()
+                } else {
+                    dialog.dismissDialog()
+                }
+            }
+            dialog.start()
+        }
+
+        socketViewModel.socket.on("user right") {args ->
+            println("get right event from server")
+            val rightUserId = args[0] as String
+            finish_users.add(rightUserId)
+            active_users.remove(rightUserId)
+
+            println("after user right " + finish_users)
+            println("after user right active " + active_users)
+
+            if (active_users.size == 1) {
+                finishFragment(finish_users)
+            }
+        }
+
+        socketViewModel.socket.on("finish game") { args ->
+            // "finish game" 신호를 받으면 게임 종료 처리를 수행합니다.
+            activity?.runOnUiThread {
+                finishFragment(finish_users)
+            }
+        }
+
 
         return view
+    }
+
+    private fun setupUserRecyclerView() {
+        activity?.runOnUiThread {
+            userKeywords = combineUserKeywords()
+            userAdapter = GameUserAdapter(userKeywords)
+            userRecyclerView.adapter = userAdapter
+        }
+    }
+
+    private fun combineUserKeywords(): List<UserKeyword> {
+        return userList.mapNotNull { user ->
+            other_keywords.find {
+                println("it_id" + it._id)
+                println("user id " + user._id)
+                it._id == user._id
+            }?.let { keyword ->
+                UserKeyword(user.nickname, keyword.keyword)
+            }
+        }
     }
 
     fun addMessage(newMessage: ChatMessage) {
@@ -157,5 +260,31 @@ class GameFragment : Fragment() {
         } catch(e: Exception) {
             Log.d("Get room error", "room 을 받아오지 못했음")
         }
+    }
+
+    private fun finishFragment(finish_users: MutableList<String>) {
+        socketViewModel.finishGame(roomId)
+
+        val remainingUsers = ids_ofUserList.filterNot { finish_users.contains(it) }
+
+        // 차집합에 해당하는 유저들을 finishUsers에 추가합니다.
+        finish_users.addAll(remainingUsers)
+
+        println("last finish _users " + finish_users)
+
+        // Bundle에 finishUsers를 담아 EndFragment에 전달합니다.
+        val bundle = Bundle().apply {
+            putStringArrayList("finishUsers", ArrayList(finish_users))
+        }
+
+        // EndFragment를 시작합니다.
+        val endFragment = EndFragment().apply {
+            arguments = bundle
+        }
+
+
+
+        // EndFragment로 전환합니다.
+        requireActivity().supportFragmentManager?.beginTransaction()?.replace(R.id.game_container, endFragment)?.commit()
     }
 }

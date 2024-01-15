@@ -66,4 +66,9 @@ data class Room (
     val userList: List<String>, //userid로 이용
     val roomLeader: String,
 )
+data class UserKeyword(
+    val nickname: String,
+    val keyword: String
+)
+
 data class UserResponse(val message: String, val UID: Int = -1)
