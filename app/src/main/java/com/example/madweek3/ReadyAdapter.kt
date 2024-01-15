@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import org.json.JSONObject
+import org.json.JSONString
+
 class ReadyAdapter(private val context: Context, private var userList: MutableList<User>) : BaseAdapter(){
 
     // getCount 메서드는 Adapter에 표시할 아이템의 총 개수를 반환합니다.
@@ -41,6 +44,7 @@ class ReadyAdapter(private val context: Context, private var userList: MutableLi
 
         // 데이터 설정
         val data = userList[position]
+        println("id is " + data._id)
         holder.ready_userId.text = data.nickname
         holder.ready_userLevel.text = data.level
 

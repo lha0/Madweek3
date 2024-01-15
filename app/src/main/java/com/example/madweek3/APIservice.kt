@@ -43,10 +43,13 @@ interface APIservice {
     @POST("/deleteRoomMember/{roomId}")
     fun deleteRoomMember(@Body my_userId: String, @Path("roomId") roomId: String): Call<UserResponse>
 
+    @GET("/room/{roomId}")
+    suspend fun getRoomInfo(@Path("roomId") roomId: String): Response<Room>
 }
 
 @Parcelize
 class User(
+    val _id: String,
     val email: String,
     val password: String,
     val nickname: String,

@@ -30,6 +30,7 @@ class GameFragment : Fragment() {
     private lateinit var writedMessage: String
 
     //타이머
+    private var currentUserIndex: Int = 0
     private var timer: Timer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,6 +90,19 @@ class GameFragment : Fragment() {
 
         }
 
+        socketViewModel.socket.on("next user") {args ->
+            val newIndex = args[0] as Int
+            currentUserIndex = newIndex
+            val alertmessage = if (userList[currentUserIndex]._id == loggedInUserId){
+                "다음차례입니다."
+            } else {
+                "다른 유저가 선택 중입니다."
+            }
+            activity?.runOnUiThread {
+                showAnswerDialog(alertmessage)
+            }
+        }
+
         startTimer()
         return view
     }
@@ -107,21 +121,22 @@ class GameFragment : Fragment() {
         timer = Timer()
 
         timer?.schedule(3000) {
-            activity?.runOnUiThread {
-                showAnswerDialog()
-            }
+            currentUserIndex = (currentUserIndex + 1) % userList.size
+            socketViewModel.nextUser(roomId, currentUserIndex)
         }
     }
 
-    private fun showAnswerDialog() {
+    private fun showAnswerDialog(message: String) {
         val dialog = AnswerDialog(requireContext())
         dialog.setOnQuestionClickedListener {
+            socketViewModel.select(roomId, "question_clicked")
             startTimer()
         }
         dialog.setOnAnswerClickedListener {
+            socketViewModel.select(roomId, "answer_clicked")
             startTimer()
         }
-        dialog.start("다음 차례 입니다. \n 원하는 버튼을 클릭해주세요.")
+        dialog.start(message)
     }
 
     override fun onDestroyView() {

@@ -17,17 +17,17 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.json.JSONObject
-import org.w3c.dom.Text
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
+import kotlin.Exception
 
 class ReadyFragment : Fragment() {
 
     private lateinit var currentRoom: Room
+    private lateinit var roomLeaderId: String
     private lateinit var readyBtn: Button
     private lateinit var gameStartBtn: Button
     private lateinit var readyUserView: TextView
@@ -49,6 +49,13 @@ class ReadyFragment : Fragment() {
 
         // 현재 방의 roomId 받아오기
         roomId = arguments?.getString("roomId")?:""
+
+        lifecycleScope.launch {
+            val getRoomInfo = async { getRoomInfo(roomId) }
+            getRoomInfo.await()
+
+            roomLeaderId = currentRoom.roomLeader
+        }
 
 
     }
@@ -170,12 +177,18 @@ class ReadyFragment : Fragment() {
 
 
         gameStartBtn.setOnClickListener {
-            if (gameStartBtn.isEnabled) {
-                val intent = Intent(requireActivity(), GameActivity::class.java)
-                intent.putExtra("roomId", roomId)
-                intent.putParcelableArrayListExtra("userList", userList)
-                startActivity(intent)
+            if (userId == roomLeaderId) {
+                socketViewModel.gameStart(roomId)
+
             }
+
+        }
+
+        socketViewModel.socket.on("game start") {args ->
+            val intent = Intent(requireActivity(), GameActivity::class.java)
+            intent.putExtra("roomId", roomId)
+            intent.putParcelableArrayListExtra("userList", userList)
+            startActivity(intent)
         }
     }
 
@@ -184,7 +197,7 @@ class ReadyFragment : Fragment() {
             val response = RetrofitClient.instance.getRoomMember(roomId)
             if (response.isSuccessful && response.body() != null) {
                 userList = response.body()!!
-                Log.d("check", userList.toString())
+                println("check" + userList.toString())
 
             } else {
                 Log.d("response failed", "실패")
@@ -205,6 +218,7 @@ class ReadyFragment : Fragment() {
                 val userLevel = response.body()!!.level
                 val userScore = response.body()!!.score
                 val otherUser = User(
+                    _id = otherUserId,
                     email = userEmail,
                     password = userPW,
                     nickname = userNickname,
@@ -251,6 +265,17 @@ class ReadyFragment : Fragment() {
                     Toast.makeText(context, "네트워크 오류: 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                 }
             })
+    }
+
+    private suspend fun getRoomInfo(id: String) {
+        try {
+            val response = RetrofitClient.instance.getRoomInfo(id)
+            if (response.isSuccessful && response.body() != null) {
+                currentRoom = response.body()!!
+            }
+        } catch(e: Exception) {
+            Log.d("Get room error", "room 을 받아오지 못했음")
+        }
     }
 
 }

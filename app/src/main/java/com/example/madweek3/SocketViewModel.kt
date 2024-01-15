@@ -48,4 +48,24 @@ class SocketViewModel(application: Application) : AndroidViewModel(application) 
         socket.emit("send message", data)
     }
 
+    fun gameStart(roomId: String) {
+        val data = JSONObject()
+        data.put("roomId", roomId)
+        socket.emit("game start", data)
+    }
+
+    fun nextUser(roomId: String, userIndex: Int) {
+        val data = JSONObject()
+        data.put("roomId", roomId)
+        data.put("userIndex", userIndex)
+        socket.emit("next user", data)
+    }
+
+    fun select(roomId: String, whichClicked:String) {
+        val data = JSONObject()
+        data.put("roomId", roomId)
+        data.put("whichClicked", whichClicked)
+        socket.emit("user action", data)
+    }
+
 }

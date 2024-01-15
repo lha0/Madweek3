@@ -42,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
         val password = passwordInput.text.toString().trim()
 
 
-        val userData = User(email, password, "", "새싹 세찬이", 0)
+        val userData = User("",email, password, "", "새싹 세찬이", 0)
         RetrofitClient.instance.loginUser(userData)
             .enqueue(object : Callback<UserResponse> {
                 override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
