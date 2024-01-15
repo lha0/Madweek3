@@ -63,10 +63,10 @@ class SocketViewModel(application: Application) : AndroidViewModel(application) 
         socket.emit("next user", data)
     }
 
-    fun select(roomId: String, whichClicked:String) {
+    fun select(roomId: String, userIndex: Int) {
         val data = JSONObject()
         data.put("roomId", roomId)
-        data.put("whichClicked", whichClicked)
+        data.put("userIndex", userIndex)
         socket.emit("user action", data)
     }
 

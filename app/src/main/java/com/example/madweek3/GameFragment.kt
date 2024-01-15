@@ -2,6 +2,7 @@ package com.example.madweek3
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +10,19 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.util.Timer
 import kotlin.concurrent.schedule
 
 class GameFragment : Fragment() {
+    private lateinit var currentRoom: Room
+    private lateinit var roomLeaderId: String
+
     private lateinit var roomId: String
     private lateinit var loggedInUserId: String
     private lateinit var userList: ArrayList<User>
@@ -31,7 +38,10 @@ class GameFragment : Fragment() {
 
     //타이머
     private var currentUserIndex: Int = 0
+    private var nextUserIndex: Int = 0
     private var timer: Timer? = null
+    private var answerDialog: AnswerDialog? = null
+    private var waitDialog: WaitDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +49,11 @@ class GameFragment : Fragment() {
         arguments?.let {
             roomId = it.getString("roomId")?:""
             userList = it.getParcelableArrayList("userList")?:ArrayList()
+
+            userList.sortBy { user -> user._id }
+
+            println("userList[0].id is " + userList[0]._id)
+            println("userList[1].id is " + userList[1]._id)
         }
 
         val sharedPreferences = requireActivity().getSharedPreferences("MySharedPref",
@@ -46,6 +61,12 @@ class GameFragment : Fragment() {
         )
         loggedInUserId = sharedPreferences.getString("userId", "")?:""
 
+        lifecycleScope.launch {
+            val getRoomInfo = async { getRoomInfo(roomId) }
+            getRoomInfo.await()
+
+            roomLeaderId = currentRoom.roomLeader
+        }
     }
 
     override fun onCreateView(
@@ -91,15 +112,17 @@ class GameFragment : Fragment() {
         }
 
         socketViewModel.socket.on("next user") {args ->
+            println("socket next user on 실행")
             val newIndex = args[0] as Int
             currentUserIndex = newIndex
-            val alertmessage = if (userList[currentUserIndex]._id == loggedInUserId){
-                "다음차례입니다."
-            } else {
-                "다른 유저가 선택 중입니다."
-            }
+        }
+
+        socketViewModel.socket.on("user action") {args ->
+            println("socket user action 실행")
             activity?.runOnUiThread {
-                showAnswerDialog(alertmessage)
+                answerDialog?.dismissDialog()
+                waitDialog?.dismissDialog()
+                startTimer()
             }
         }
 
@@ -120,27 +143,71 @@ class GameFragment : Fragment() {
         timer?.cancel()
         timer = Timer()
 
-        timer?.schedule(3000) {
-            currentUserIndex = (currentUserIndex + 1) % userList.size
-            socketViewModel.nextUser(roomId, currentUserIndex)
+        println("in startTimer" + currentUserIndex)
+
+        timer?.schedule(300000) {
+            activity?.runOnUiThread {
+                if (currentUserIndex < userList.size) {
+                    updateDialogsForCurrentUser()
+                }
+                println("userindex 업데이트")
+                nextUserIndex = (currentUserIndex + 1) % userList.size
+                socketViewModel.nextUser(roomId, nextUserIndex)
+            }
+
+        }
+    }
+
+    private fun updateDialogsForCurrentUser() {
+        println("update dialog 실행")
+        println("current User Index " + currentUserIndex)
+        println("userList[currentUserIndex] id " + userList[currentUserIndex]._id )
+        println("loggedInUserId " + loggedInUserId)
+        if (userList[currentUserIndex]._id == loggedInUserId) {
+            showAnswerDialog("다음 차례입니다.")
+        } else {
+            showWaitDialog()
         }
     }
 
     private fun showAnswerDialog(message: String) {
-        val dialog = AnswerDialog(requireContext())
-        dialog.setOnQuestionClickedListener {
-            socketViewModel.select(roomId, "question_clicked")
-            startTimer()
+        println("show answer dialog 실행 ")
+        answerDialog = AnswerDialog(requireContext()).apply {
+            setOnQuestionClickedListener {
+                socketViewModel.select(roomId, currentUserIndex)
+                dismissDialog()
+            }
+
+            setOnAnswerClickedListener {
+                socketViewModel.select(roomId, currentUserIndex)
+                dismissDialog()
+            }
+            start(message)
+
         }
-        dialog.setOnAnswerClickedListener {
-            socketViewModel.select(roomId, "answer_clicked")
-            startTimer()
+    }
+
+    private fun showWaitDialog() {
+        println("show wait dialog 실행")
+        waitDialog = WaitDialog(requireContext()).apply {
+            socketViewModel.select(roomId, currentUserIndex)
+            start()
         }
-        dialog.start(message)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         timer?.cancel()
+    }
+
+    private suspend fun getRoomInfo(id: String) {
+        try {
+            val response = RetrofitClient.instance.getRoomInfo(id)
+            if (response.isSuccessful && response.body() != null) {
+                currentRoom = response.body()!!
+            }
+        } catch(e: Exception) {
+            Log.d("Get room error", "room 을 받아오지 못했음")
+        }
     }
 }
