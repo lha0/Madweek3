@@ -59,17 +59,7 @@ class RoomListFragment : Fragment() {
                     val addMember_toCurrentRoom = async { addRoomMember(userId, current_roomId) }
                     addMember_toCurrentRoom.await()
 
-                    val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-                    val readyFragment = ReadyFragment()
-                    val bundle = Bundle()
-                    bundle.putString("roomId", current_roomId)
-                    readyFragment.arguments = bundle
 
-                    // Fragment 전환
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_container, readyFragment)
-                        .addToBackStack(null)
-                        .commit()
 
                 }
             } else {
@@ -108,10 +98,21 @@ class RoomListFragment : Fragment() {
                 if (response.body()!!.UID == 200) {
                     Log.d("check","successfully add room Member")
                     Toast.makeText(requireContext(), "입장 성공", Toast.LENGTH_SHORT).show()
+
+                    val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+                    val readyFragment = ReadyFragment()
+                    val bundle = Bundle()
+                    bundle.putString("roomId", current_roomId)
+                    readyFragment.arguments = bundle
+
+                    // Fragment 전환
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_container, readyFragment)
+                        .addToBackStack(null)
+                        .commit()
                 }
 
-                else if (response.body()!!.UID ==400) {
-                    Log.d("check","successfully add room Member")
+                else if (response.body()!!.UID ==401) {
                     Toast.makeText(requireContext(), "최대 인원을 초과하였습니다.", Toast.LENGTH_SHORT).show()
                 }
 
