@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.json.JSONObject
+import java.util.Timer
+import kotlin.concurrent.schedule
 
 class GameFragment : Fragment() {
     private lateinit var roomId: String
@@ -26,6 +28,9 @@ class GameFragment : Fragment() {
     private var messages: MutableList<ChatMessage> = mutableListOf()
 
     private lateinit var writedMessage: String
+
+    //타이머
+    private var timer: Timer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,8 +69,9 @@ class GameFragment : Fragment() {
             val userName = findName(loggedInUserId)?:"본인"
             val messageClass = ChatMessage(writedMessage, userName, true)
             socketViewModel.sendMessage(roomId, loggedInUserId, messageClass)
-            println("send"+messageClass)
-            addMessage(messageClass)
+            activity?.runOnUiThread {
+                addMessage(messageClass)
+            }
         }
 
         socketViewModel.socket.on("get message") {args ->
@@ -83,9 +89,7 @@ class GameFragment : Fragment() {
 
         }
 
-        //addMessage(ChatMessage("안녕하세요", "하영", true))
-        //addMessage(ChatMessage("안녕하세요", "상대", false))
-
+        startTimer()
         return view
     }
 
@@ -96,5 +100,32 @@ class GameFragment : Fragment() {
 
     fun findName(userId: String): String? {
         return userList.find { it.nickname == userId }?.nickname
+    }
+
+    private fun startTimer() {
+        timer?.cancel()
+        timer = Timer()
+
+        timer?.schedule(3000) {
+            activity?.runOnUiThread {
+                showAnswerDialog()
+            }
+        }
+    }
+
+    private fun showAnswerDialog() {
+        val dialog = AnswerDialog(requireContext())
+        dialog.setOnQuestionClickedListener {
+            startTimer()
+        }
+        dialog.setOnAnswerClickedListener {
+            startTimer()
+        }
+        dialog.start("다음 차례 입니다. \n 원하는 버튼을 클릭해주세요.")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        timer?.cancel()
     }
 }
