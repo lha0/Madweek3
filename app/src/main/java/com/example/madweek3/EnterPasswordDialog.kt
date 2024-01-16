@@ -61,14 +61,5 @@ class EnterPasswordDialog : DialogFragment() {
         return dialog
     }
 
-    private fun isPasswordValid(entered_password: String): Boolean {
-        // 실제로는 서버 등에서 비밀번호를 확인하는 로직을 수행해야 합니다.
-        // 여기서는 간단한 예시로 "1234"라는 비밀번호를 허용하도록 했습니다.
-        val valid_password = arguments?.getString("key_valid_password", "")
-        return (entered_password == valid_password)
-    }
 
-    private fun showToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-    }
 }

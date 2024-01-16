@@ -24,7 +24,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/editText_toSearchRoom"
                 android:layout_width="0dp"
                 android:layout_weight="6"
                 android:layout_height="wrap_content"
@@ -32,9 +32,10 @@
                 android:hint="Enter text"/>
 
             <Button
+                android:id="@+id/searchButton_toSearchRoom"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="검색"/>
 
         </LinearLayout>

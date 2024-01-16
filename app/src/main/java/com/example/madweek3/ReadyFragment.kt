@@ -1,5 +1,7 @@
 package com.example.madweek3
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -11,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.GridView
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -138,6 +141,7 @@ class ReadyFragment : Fragment() {
         readyBtn = view.findViewById(R.id.readyBtn)
         gameStartBtn = view.findViewById(R.id.startBtn)
         readyUserView = view.findViewById(R.id.numCount)
+        val copyButton = view.findViewById<ImageView>(R.id.copyButton)
 
         //준비 버튼 클릭 시, 해당 유저 join to room
         readyBtn.setOnClickListener {
@@ -152,6 +156,16 @@ class ReadyFragment : Fragment() {
                 isReady = true
                 socketViewModel.userReady(roomId, userId, adapterCount)
             }
+        }
+
+        copyButton.setOnClickListener {
+            val roomCode = roomId // 방 코드를 가져와서 사용
+
+            // 클립보드에 복사
+            copyToClipboard(roomCode)
+
+            // 다른 앱으로 공유
+            shareText(roomCode)
         }
 
         socketViewModel.socket?.on("user ready num") {args ->
@@ -285,6 +299,22 @@ class ReadyFragment : Fragment() {
         } catch(e: Exception) {
             Log.d("Get room error", "room 을 받아오지 못했음")
         }
+    }
+
+    private fun copyToClipboard(text: String) {
+        val clipboardManager =
+            requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("Room Code", text)
+        clipboardManager.setPrimaryClip(clip)
+    }
+
+    private fun shareText(text: String) {
+        val shareIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, text)
+            type = "text/plain"
+        }
+        startActivity(Intent.createChooser(shareIntent, "Share using"))
     }
 
 }
