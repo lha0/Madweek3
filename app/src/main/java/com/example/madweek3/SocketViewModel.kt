@@ -67,4 +67,17 @@ class SocketViewModel(application: Application) : AndroidViewModel(application) 
         socket.emit("assign keywords", data)
     }
 
+    fun answerRight(roomId:String, userId: String) {
+        val data = JSONObject()
+        data.put("roomId", roomId)
+        data.put("userId", userId)
+        socket.emit("answer right", data)
+    }
+
+    fun finishGame(roomId:String) {
+        val data = JSONObject()
+        data.put("roomId", roomId)
+        socket.emit("finish game", data)
+    }
+
 }

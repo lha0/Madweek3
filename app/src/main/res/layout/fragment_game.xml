@@ -33,96 +33,13 @@
             android:textSize="10sp"/>
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/user_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"
-        android:layout_marginTop="20sp"
-        android:orientation="horizontal">
+        android:layout_height="100sp"
+        android:orientation="horizontal"
+        android:layout_margin="20dp"/>
 
-        <LinearLayout
-            android:id="@+id/user1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="User1"
-                android:gravity="center"/>
-
-            <TextView
-                android:id="@+id/keyword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="keyword1"
-                android:gravity="center"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/user2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="User2"
-                android:gravity="center"/>
-
-            <TextView
-                android:id="@+id/keyword2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="keyword2"
-                android:gravity="center"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/user3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="User3"
-                android:gravity="center"/>
-
-            <TextView
-                android:id="@+id/keyword3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="keyword3"
-                android:gravity="center"
-                />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/timer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"
-        android:layout_marginTop="20sp"
-        android:text="00:00"
-        android:gravity="center"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatroom"
@@ -148,14 +65,6 @@
             android:text="정답 입력하기"
             android:gravity="center"
             android:layout_marginRight="10sp"
-            />
-
-        <Button
-            android:id="@+id/qBtn"
-            android:layout_width="150sp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10sp"
-            android:text="질문하기"
             />
 
     </LinearLayout>
