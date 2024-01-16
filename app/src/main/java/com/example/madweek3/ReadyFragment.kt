@@ -146,26 +146,26 @@ class ReadyFragment : Fragment() {
                 readyBtn.setBackgroundColor(Color.parseColor("#8b8b8b"))
                 isReady = false
                 socketViewModel.userUnready(roomId, userId, adapterCount)
-
-                socketViewModel.socket?.on("user ready num") {args ->
-                    val data = args[0] as JSONObject
-                    activity?.runOnUiThread {
-                        readyUserView.setText(data.getString("number").toString())
-                    }
-
-                }
             } else {
                 readyBtn.setText("준비완료")
                 readyBtn.setBackgroundColor(Color.parseColor("#c3c3c3"))
                 isReady = true
                 socketViewModel.userReady(roomId, userId, adapterCount)
+            }
+        }
 
-                socketViewModel.socket?.on("user unready num") {args ->
-                    val data = args[0] as JSONObject
-                    activity?.runOnUiThread {
-                        readyUserView.setText(data.getString("number").toString())
-                    }
-                }
+        socketViewModel.socket?.on("user ready num") {args ->
+            val data = args[0] as JSONObject
+            activity?.runOnUiThread {
+                readyUserView.setText(data.getString("number").toString())
+            }
+
+        }
+
+        socketViewModel.socket?.on("user unready num") {args ->
+            val data = args[0] as JSONObject
+            activity?.runOnUiThread {
+                readyUserView.setText(data.getString("number").toString())
             }
         }
 
