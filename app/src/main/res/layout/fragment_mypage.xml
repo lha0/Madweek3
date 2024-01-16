@@ -7,21 +7,25 @@
     tools:context=".MypageFragment">
 
 
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50sp"
         android:layout_marginStart="9dp"
         android:layout_marginEnd="9dp"
+        android:layout_maringTop="9dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <Button
+            android:layout_gravity="bottom"
             android:id="@+id/questionBtn"
-            android:layout_width="50sp"
-            android:layout_height="50sp"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
             android:background="@drawable/question" />
 
         <View
@@ -32,7 +36,9 @@
         <Button
             android:id="@+id/modifyBtn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40sp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/btn_blue"
             android:text="수정"
             android:textSize="20sp" />
 
@@ -43,22 +49,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:gravity="center"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20sp"
         android:layout_marginBottom="32dp"
-        android:background="@color/gray"
+        android:background="@drawable/blue_background_mypage"
         android:orientation="vertical"
         android:padding="50sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintStart_toStartOf="@+id/linearLayout3">
 
-        <ImageView
-            android:id="@+id/imageSechan"
-            android:layout_width="150sp"
-            android:layout_height="150sp"
-            android:layout_gravity="center"
-            android:layout_margin="20sp"
-            android:src="@drawable/sechan" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="250sp"
+            android:layout_height="250sp"
+            android:layout_centerInParent="true"
+            app:cardCornerRadius="125sp">
+
+            <ImageView
+                android:id="@+id/imageSechan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/sechan"
+                android:scaleType="centerCrop" />
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,81 +82,108 @@
             android:layout_gravity="center">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10sp"
+                android:gravity="right"
                 android:text="나의 레벨 : "
-                android:textSize="15sp" />
+                android:textSize="22sp"
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/mypageLevel"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:gravity="left"
                 android:text="꼬질이 세찬"
-                android:textSize="15sp" />
+                android:textSize="22sp"
+                android:textColor="@color/white"/>
         </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/linearLayout3"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50sp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="180dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:cardCornerRadius="10dp">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_marginRight="10sp"
-            android:layout_weight="1"
-            android:text="닉네임:"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:layout_marginLeft="10sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/mypageNickname"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="닉네임"
-            android:textSize="20sp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10sp"
+                android:layout_weight="1"
+                android:text="닉네임:"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/mypageNickname"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="닉네임"
+                android:textSize="20sp" />
+        </LinearLayout>
 
-    <LinearLayout
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/linearLayout4"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50sp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="19dp"
         android:layout_marginEnd="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        app:cardCornerRadius="10dp">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_marginRight="10sp"
-            android:layout_weight="1"
-            android:text="이메일:"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:layout_marginLeft="10sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/mypageEmail"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="naver.com"
-            android:textSize="20sp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10sp"
+                android:layout_weight="1"
+                android:text="이메일:"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/mypageEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="naver.com"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

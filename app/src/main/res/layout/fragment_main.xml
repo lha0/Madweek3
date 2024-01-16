@@ -14,6 +14,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_weight="1.2"
+        android:layout_gravity="end"
+        android:layout_marginRight="10sp"
         android:orientation="vertical">
 
         <ImageView
@@ -25,24 +27,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Logout" />
+            android:text="로그아웃" />
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:src="@drawable/final_game_logo"
+        android:layout_marginTop="20sp"
+        android:padding="40sp"
+        android:layout_gravity="bottom"/>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"
+        android:layout_weight="5"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
         <LinearLayout
             android:id="@+id/EnteringButton"
             android:layout_width="0dp"
-            android:layout_height="130dp"
-            android:layout_margin="30dp"
+            android:layout_height="140sp"
+            android:layout_marginLeft="20sp"
+            android:layout_marginRight="10sp"
+            android:layout_marginBottom="40sp"
             android:layout_weight="1"
-            android:background="@drawable/button_background_1"
+            android:background="@drawable/blue_button_main"
             android:orientation="vertical">
 
             <ImageView
@@ -50,7 +63,8 @@
                 android:layout_height="0dp"
                 android:layout_gravity="center"
                 android:layout_weight="4"
-                android:src="@drawable/people_icon" />
+                android:src="@drawable/people_icon"
+                android:tint="@color/white"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -58,6 +72,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textColor="@color/white"
                 android:text="입장하기" />
 
         </LinearLayout>
@@ -65,12 +80,14 @@
         <LinearLayout
             android:id="@+id/RoomSearchButton"
             android:layout_width="0dp"
-            android:layout_height="130dp"
+            android:layout_height="140sp"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_margin="30dp"
-            android:background="@drawable/button_background_1">
+            android:layout_marginRight="20sp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginBottom="40sp"
+            android:background="@drawable/yellow_button_main">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
@@ -83,6 +100,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:layout_gravity="center"
+                android:textColor="@color/black"
                 android:text="방 찾기"/>
 
         </LinearLayout>
@@ -97,11 +115,6 @@
         android:orientation="horizontal"
         android:gravity="end">
 
-        <Button
-            android:id="@+id/EndFragmentButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="EndFragment"/>
 
         <LinearLayout
             android:id="@+id/RankingButton"
@@ -114,14 +127,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="4"
-                android:layout_marginBottom = "5dp"
+                android:layout_marginTop = "5sp"
+                android:layout_marginBottom = "5sp"
                 android:src="@drawable/ranking_icon" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Ranking"
-                android:layout_gravity="center"/>
+                android:text="랭킹"
+                android:layout_gravity="center"
+                android:textColor="@color/black"/>
 
 
         </LinearLayout>
@@ -129,22 +144,24 @@
         <LinearLayout
             android:id="@+id/MypageButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_gravity="end|center_vertical">
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginRight="10sp"
+            android:layout_marginLeft="10sp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="4"
-                android:layout_marginBottom = "5dp"
                 android:src="@drawable/mypage_icon"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Mypage"
-                android:layout_gravity="center"/>
+                android:text="마이페이지"
+                android:layout_gravity="center"
+                android:textColor="@color/black"/>
 
 
         </LinearLayout>
