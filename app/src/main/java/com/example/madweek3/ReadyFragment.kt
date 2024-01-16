@@ -37,7 +37,7 @@ class ReadyFragment : Fragment() {
     private lateinit var roomId: String
     private var adapterCount: Int = 0
     private var isReady = false
-    private var userList: ArrayList<User>? = null
+    private var userList: ArrayList<User> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -232,6 +232,7 @@ class ReadyFragment : Fragment() {
                     score = userScore
                 )
                 userList!!.add(otherUser)
+                userList = userList.distinct().toList() as ArrayList<User>
                 gridViewAdapter.notifyDataSetChanged()
             }
 
