@@ -60,14 +60,6 @@ class GameFragment : Fragment() {
     private lateinit var answerBtn: Button
     private lateinit var userAnswerInput: String
 
-
-    //타이머
-    private var currentUserIndex: Int = 0
-    private var nextUserIndex: Int = 0
-    private var timer: Timer? = null
-    private var answerDialog: AnswerDialog? = null
-    private var waitDialog: WaitDialog? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -244,11 +236,6 @@ class GameFragment : Fragment() {
 
     fun findName(userId: String): String? {
         return userList.find { it.nickname == userId }?.nickname
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        timer?.cancel()
     }
 
     private suspend fun getRoomInfo(id: String) {
