@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blue"
     tools:context=".LoginActivity">
 
     <LinearLayout
@@ -12,41 +13,46 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center">
-        <TextView
-            android:id="@+id/loginTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="양세찬 게임"
-            android:textSize="30dp"/>
+
+        <ImageView
+            android:layout_width="200sp"
+            android:layout_height="91sp"
+            android:src="@drawable/final_game_logo"
+            />
 
         <EditText
             android:id="@+id/liEmail"
             android:layout_width="200dp"
             android:layout_height="40dp"
             android:layout_margin="10dp"
-            android:hint="Email"/>
+            android:paddingLeft="10sp"
+            android:hint="이메일"
+            android:background="@drawable/white_rectangle"/>
         
         <EditText
             android:id="@+id/liPW"
             android:layout_width="200dp"
             android:layout_height="40dp"
             android:layout_margin="10dp"
-            android:hint="Password"/>
+            android:paddingLeft="10sp"
+            android:hint="비밀번호"
+            android:background="@drawable/white_rectangle"/>
         
         <Button
             android:id="@+id/loginBtn"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_margin="10dp"
-            android:text="Log In"/>
+            android:text="Log In"
+            android:background="@drawable/btn_yellow"/>
 
         <Button
             android:id="@+id/TosignupBtn"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_margin="10dp"
-            android:text="Sign Up"/>
+            android:text="Sign Up"
+            android:background="@drawable/btn_yellow" />
 
     </LinearLayout>
 
