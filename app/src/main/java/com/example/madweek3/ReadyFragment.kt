@@ -40,6 +40,7 @@ class ReadyFragment : Fragment() {
     private lateinit var roomId: String
     private var adapterCount: Int = 0
     private var isReady = false
+    private var isStartReady = false
     private var userList: ArrayList<User> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -147,12 +148,12 @@ class ReadyFragment : Fragment() {
         readyBtn.setOnClickListener {
             if (isReady) {
                 readyBtn.setText("준비하기")
-                readyBtn.setBackgroundColor(Color.parseColor("#8b8b8b"))
+                readyBtn.setBackgroundResource(R.drawable.btn_yellow)
                 isReady = false
                 socketViewModel.userUnready(roomId, userId, adapterCount)
             } else {
                 readyBtn.setText("준비완료")
-                readyBtn.setBackgroundColor(Color.parseColor("#c3c3c3"))
+                readyBtn.setBackgroundResource(R.drawable.btn_gray)
                 isReady = true
                 socketViewModel.userReady(roomId, userId, adapterCount)
             }
@@ -186,12 +187,17 @@ class ReadyFragment : Fragment() {
         socketViewModel.socket?.on("all user ready") { args ->
             activity?.runOnUiThread {
                 gameStartBtn.isEnabled = true
+                gameStartBtn.setBackgroundResource(R.drawable.btn_blue)
+                gameStartBtn.setTextColor(resources.getColor(R.color.white))
+
             }
         }
 
         socketViewModel.socket?.on("all user unready") { args ->
             activity?.runOnUiThread {
                 gameStartBtn.isEnabled = false
+                gameStartBtn.setBackgroundResource(R.drawable.btn_gray)
+                gameStartBtn.setTextColor(resources.getColor(R.color.black))
             }
         }
 

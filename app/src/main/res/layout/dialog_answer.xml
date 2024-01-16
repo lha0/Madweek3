@@ -11,15 +11,19 @@
         android:id="@+id/dialogAnswerEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:hint="정답 입력"
+        android:background="@drawable/btn_gray"
         android:layout_gravity="center"/>
 
         <Button
             android:id="@+id/dialogAnswerBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10sp"
+            android:layout_width="105dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
             android:text="정답 입력"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_blue"
             android:layout_gravity="center"/>
 
 
