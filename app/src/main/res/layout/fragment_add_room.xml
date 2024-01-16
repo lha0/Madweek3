@@ -1,69 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddRoomFragment"
+    android:background="@color/white"
+    android:gravity="center"
     android:orientation="vertical"
-    android:gravity="center">
+    tools:context=".AddRoomFragment">
 
     <EditText
         android:id="@+id/roomName_editText"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="247dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/btn_gray"
         android:hint="방 제목을 입력해주세요."
-        android:layout_margin="10sp"/>
+        android:padding="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout10"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="5dp"
         android:orientation="horizontal"
-        android:layout_margin="10sp">
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/roomName_editText">
 
         <CheckBox
             android:id="@+id/checkBox_privateLock"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="방 비밀번호"
-            android:checked="false"/>
+            android:checked="false"
+            android:text="방 비밀번호" />
 
         <EditText
             android:id="@+id/passwordLock_editText"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"/>
-
+            android:layout_gravity="center"
+            android:layout_weight="2.5" />
 
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/linearLayout11"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="242dp"
         android:orientation="horizontal"
-        android:layout_margin="10dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout10">
 
         <Button
             android:id="@+id/backButton_toRoomList"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginLeft="20sp"
             android:layout_marginRight="5sp"
-            android:text="뒤로 가기"/>
+            android:layout_weight="1"
+            android:background="@drawable/btn_blue"
+            android:text="뒤로 가기"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/confirmButton_toMakeRoom"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginLeft="5sp"
-            android:text="방 만들기"/>
+            android:layout_marginRight="20sp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_yellow"
+            android:text="방 만들기" />
 
 
     </LinearLayout>
 
 
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

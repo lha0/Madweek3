@@ -1,142 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".MainFragment">
 
     <LinearLayout
         android:id="@+id/logoutButton"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1.2"
-        android:layout_gravity="end"
-        android:layout_marginRight="10sp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="83dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:src="@drawable/logout_icon" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="로그아웃" />
+            android:layout_marginTop="5sp"
+            android:gravity="center"
+            android:text="로그아웃"
+            android:textColor="@color/black" />
     </LinearLayout>
 
     <ImageView
-        android:layout_width="match_parent"
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="5"
-        android:src="@drawable/final_game_logo"
-        android:layout_marginTop="20sp"
+        android:layout_gravity="bottom"
         android:padding="40sp"
-        android:layout_gravity="bottom"/>
+        android:src="@drawable/final_game_logo"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoutButton" />
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:id="@+id/linearLayout5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="88dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
 
         <LinearLayout
             android:id="@+id/EnteringButton"
-            android:layout_width="0dp"
-            android:layout_height="140sp"
-            android:layout_marginLeft="20sp"
+            android:layout_width="130sp"
+            android:layout_height="130sp"
             android:layout_marginRight="10sp"
-            android:layout_marginBottom="40sp"
-            android:layout_weight="1"
             android:background="@drawable/blue_button_main"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="67dp"
+            tools:layout_editor_absoluteY="412dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_width="60sp"
+                android:layout_height="0sp"
                 android:layout_gravity="center"
-                android:layout_weight="4"
+                android:layout_weight="2"
                 android:src="@drawable/people_icon"
-                android:tint="@color/white"/>
+                android:tint="@color/white" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:text="입장하기" />
+                android:gravity="top"
+                android:text="입장하기"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/RoomSearchButton"
-            android:layout_width="0dp"
-            android:layout_height="140sp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_marginRight="20sp"
+            android:layout_width="130sp"
+            android:layout_height="130sp"
             android:layout_marginLeft="10sp"
-            android:layout_marginBottom="40sp"
-            android:background="@drawable/yellow_button_main">
+            android:background="@drawable/yellow_button_main"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="219dp"
+            tools:layout_editor_absoluteY="412dp">
+
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="4"
-                android:src="@drawable/search_icon"/>
+                android:layout_width="60sp"
+                android:layout_height="0sp"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:src="@drawable/search_icon" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:layout_height="0dp"
                 android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:text="방 찾기"/>
+                android:layout_weight="1"
+                android:gravity="top"
+                android:text="방 찾기"
+                android:textColor="@color/black" />
 
         </LinearLayout>
-
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout6"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:orientation="horizontal"
-        android:gravity="end">
-
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:layout_marginRight="20sp"
+        android:gravity="end"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
         <LinearLayout
             android:id="@+id/RankingButton"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:orientation="vertical"
-            android:layout_margin="5dp">
+            tools:layout_editor_absoluteX="256dp"
+            tools:layout_editor_absoluteY="640dp">
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5sp"
+                android:layout_marginBottom="5sp"
                 android:layout_weight="4"
-                android:layout_marginTop = "5sp"
-                android:layout_marginBottom = "5sp"
                 android:src="@drawable/ranking_icon" />
+
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="랭킹"
-                android:layout_gravity="center"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
 
 
         </LinearLayout>
@@ -144,24 +163,25 @@
         <LinearLayout
             android:id="@+id/MypageButton"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
-            android:layout_marginRight="10sp"
-            android:layout_marginLeft="10sp">
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="332dp"
+            tools:layout_editor_absoluteY="640dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="4"
-                android:src="@drawable/mypage_icon"/>
+                android:src="@drawable/mypage_icon" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="마이페이지"
-                android:layout_gravity="center"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
 
 
         </LinearLayout>
@@ -169,4 +189,4 @@
     </LinearLayout>
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
