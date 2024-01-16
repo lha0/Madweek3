@@ -6,11 +6,19 @@ import android.widget.Button
 import android.widget.TextView
 class WaitDialog(context: Context) {
     private val dlg = Dialog(context)
-    private lateinit var waitDialogTV : TextView
+    private lateinit var closeBtn : Button
 
     fun start() {
         dlg.setContentView(R.layout.dialog_wait)
         dlg.setCancelable(false)
+
+
+
+        closeBtn = dlg.findViewById(R.id.closeBtn)
+
+        closeBtn.setOnClickListener {
+            dismissDialog()
+        }
 
         dlg.show()
     }
