@@ -52,7 +52,7 @@
         android:layout_gravity="center"
         android:layout_marginStart="9dp"
         android:layout_marginEnd="9dp"
-        android:layout_marginBottom="33dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/blue_background_mypage"
         android:gravity="center"
         android:orientation="vertical"
@@ -81,6 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:layout_marginLeft="20sp"
             android:layout_marginTop="30sp"
             android:layout_marginRight="20sp"
@@ -88,10 +89,9 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10sp"
-                android:layout_weight="1"
                 android:gravity="right"
                 android:text="나의 레벨 : "
                 android:textColor="@color/white"
@@ -99,9 +99,8 @@
 
             <TextView
                 android:id="@+id/mypageLevel"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:gravity="left"
                 android:text="꼬질이 세찬"
                 android:textColor="@color/white"
@@ -113,7 +112,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/linearLayout3"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="50dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="19dp"
@@ -138,7 +137,7 @@
                 android:layout_weight="1"
                 android:text="닉네임:"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/mypageNickname"
@@ -146,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:text="닉네임"
-                android:textSize="20sp" />
+                android:textSize="17sp" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -154,7 +153,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/linearLayout4"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="50dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="123dp"
@@ -179,7 +178,7 @@
                 android:layout_weight="1"
                 android:text="이메일:"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/mypageEmail"
@@ -187,7 +186,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:text="naver.com"
-                android:textSize="20sp" />
+                android:textSize="17sp" />
 
         </LinearLayout>
 
