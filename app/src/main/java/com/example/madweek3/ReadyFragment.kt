@@ -205,10 +205,13 @@ class ReadyFragment : Fragment() {
         }
 
         socketViewModel.socket.on("game start") {args ->
-            val intent = Intent(requireActivity(), GameActivity::class.java)
-            intent.putExtra("roomId", roomId)
-            intent.putParcelableArrayListExtra("userList", userList)
-            startActivity(intent)
+            val activity = getActivity()
+            if (activity != null) {
+                val intent = Intent(requireActivity(), GameActivity::class.java)
+                intent.putExtra("roomId", roomId)
+                intent.putParcelableArrayListExtra("userList", userList)
+                startActivity(intent)
+            }
         }
     }
 
