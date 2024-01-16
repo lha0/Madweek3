@@ -3,4 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#c3c3c3</color>
+    <color name="blue">#2669B6</color>
+    <color name="yellow">#F3E900</color>
+    <color name="chat_you">#E8E8E8</color>
 </resources>
