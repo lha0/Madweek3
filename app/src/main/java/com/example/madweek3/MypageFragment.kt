@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.madweek3.databinding.FragmentMypageBinding
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import java.lang.Exception
 
 class MypageFragment : Fragment() {
@@ -32,11 +33,15 @@ class MypageFragment : Fragment() {
     private lateinit var emailView: TextView
     private lateinit var pwView: TextView
     private lateinit var pwLayout: LinearLayout
+    private lateinit var sechan_imgs_perLevel: JSONObject
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        //sechan_imgs_perLevel = "{\"잼민이 세찬\": \"@drawable/level1\", \"깡깡이 세찬\": 30, \"city\": \"New York\"}"
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_mypage, container, false)
         questionBtn = view.findViewById(R.id.questionBtn)
