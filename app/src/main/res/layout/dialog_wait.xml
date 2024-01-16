@@ -8,9 +8,16 @@
     <TextView
         android:id="@+id/waitDialogTV"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="150sp"
         android:layout_marginTop="10sp"
-        android:text="다른 유저가 선택 중입니다. \n 기다리세요"
+        android:text="틀렸습니다."
         android:gravity="center"/>
+
+    <Button
+        android:id="@+id/closeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="닫기"
+        android:layout_gravity="center"/>
 
 </LinearLayout>

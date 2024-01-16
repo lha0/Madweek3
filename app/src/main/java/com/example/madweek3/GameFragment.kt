@@ -173,12 +173,14 @@ class GameFragment : Fragment() {
 
         answerBtn.setOnClickListener {
             val dialog = AnswerDialog(requireContext())
+            val wrongDialog = WaitDialog(requireContext())
             dialog.setOnAnswerClickedListener { content ->
                 userAnswerInput = content
                 if (content == my_keyword) {
                     socketViewModel.answerRight(roomId, loggedInUserId)
                     dialog.dismissDialog()
                 } else {
+                    wrongDialog.start()
                     dialog.dismissDialog()
                 }
             }
