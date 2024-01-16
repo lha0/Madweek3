@@ -86,6 +86,8 @@ class GameFragment : Fragment() {
 
             roomLeaderId = currentRoom.roomLeader
 
+            println("roomeLeaderID" + roomLeaderId)
+
             if (loggedInUserId == roomLeaderId) {
                 ids_ofUserList = userList.map { it._id }
                 println("ids_ofUserList: "+ ids_ofUserList)
@@ -140,6 +142,9 @@ class GameFragment : Fragment() {
         chatAdapter = ChatAdapter(messages)
 
         userRecyclerView = view.findViewById(R.id.user_view)
+        userAdapter = GameUserAdapter(listOf())
+
+        userRecyclerView.adapter = userAdapter
         userRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         chat_recycler.adapter = chatAdapter
@@ -154,8 +159,6 @@ class GameFragment : Fragment() {
                 addMessage(messageClass)
             }
         }
-
-
 
         socketViewModel.socket.on("get message") {args ->
             val data = args[0] as JSONObject
