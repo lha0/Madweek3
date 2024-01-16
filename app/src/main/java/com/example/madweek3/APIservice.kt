@@ -26,7 +26,7 @@ interface APIservice {
 
 
     @GET("/getAllRooms")
-    fun getAllRooms(): Call<List<Room>>
+    suspend fun getAllRooms(): Response<List<Room>>
 
     @POST("/addNewRoom")
     suspend fun addNewRoom(@Body roomData: Room): Response<UserResponse>
