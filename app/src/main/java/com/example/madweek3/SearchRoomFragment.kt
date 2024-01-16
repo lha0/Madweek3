@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 
 class SearchRoomFragment : Fragment() {
     private lateinit var loggedInUser: String
-    private lateinit var currentRoom: Room
+    private var currentRoom: Room?=null
 
 
 
@@ -59,11 +59,11 @@ class SearchRoomFragment : Fragment() {
 
                     if (currentRoom != null) {
 
-                        Log.d("searchRoom test", "${currentRoom.roomId} is not null")
+                        Log.d("searchRoom test", "${currentRoom!!.roomId} is not null")
 
-                        if (currentRoom.privateLock == true) { // 해당 방이 있으면 비번 존재하는지 확인 & 체크
+                        if (currentRoom!!.privateLock == true) { // 해당 방이 있으면 비번 존재하는지 확인 & 체크
                             //방의 lock이 걸려있는 경우
-                            val validPassword = currentRoom.passwordLock
+                            val validPassword = currentRoom!!.passwordLock
 
                             val enterPasswordDialog = EnterPasswordDialog()
                             enterPasswordDialog.show(childFragmentManager, "EnterPasswordDialog")
@@ -78,7 +78,7 @@ class SearchRoomFragment : Fragment() {
                                         val addMember_toCurrentRoom = async {
                                             addRoomMember(
                                                 loggedInUser,
-                                                currentRoom.roomId
+                                                currentRoom!!.roomId
                                             )
                                         }
                                         addMember_toCurrentRoom.await()
@@ -95,7 +95,7 @@ class SearchRoomFragment : Fragment() {
                                 val addMember_toCurrentRoom = async {
                                     addRoomMember(
                                         loggedInUser,
-                                        currentRoom.roomId
+                                        currentRoom!!.roomId
                                     )
                                 }
                                 addMember_toCurrentRoom.await()
@@ -105,6 +105,7 @@ class SearchRoomFragment : Fragment() {
                         }
 
                     }
+
                 }
 
 
@@ -121,7 +122,7 @@ class SearchRoomFragment : Fragment() {
             if (response.isSuccessful && response.body() != null) {
                 currentRoom = response.body()!!
 
-                Log.d("searchRoom test", currentRoom.roomId)
+                Log.d("searchRoom test", currentRoom!!.roomId)
 
             }
 
