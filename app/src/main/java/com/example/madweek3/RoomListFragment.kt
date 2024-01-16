@@ -19,14 +19,16 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 
-class RoomListFragment : Fragment() {
+class RoomListFragment : Fragment(){
 
-    private lateinit var viewModel: RoomListViewModel
-    private lateinit var adapter: RoomListAdapter
-    private var roomList: List<Room> = listOf()
+    private var adapter: RoomListAdapter ?= null
+    private var roomList: List<Room> ?= null
+    private var enterPasswordDialog: EnterPasswordDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        adapter = RoomListAdapter(requireContext(), emptyList()) // 빈 list에 대한 adapter 설정
+
     }
 
     override fun onCreateView(
@@ -37,30 +39,60 @@ class RoomListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_room_list, container, false)
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView_roomList)
         val makingRoomButton = view.findViewById<Button>(R.id.makingRoomButton)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        viewModel = ViewModelProvider(this).get(RoomListViewModel::class.java)
 
-        val temproomList: List<Room> = listOf(
-            Room(roomId = "EX34KW", roomName = "아무나 들어오세요~", numPeople = 3, privateLock = true, passwordLock = "1234", userList = mutableListOf("h","i","j"), roomLeader = "65a120d15dc3f4e4c06d2977"),
-            Room(roomId = "EX56KW", roomName = "컴온~", numPeople = 2, privateLock = false, passwordLock = "", userList = mutableListOf("k","l"),roomLeader="65a120d15dc3f4e4c06d2977"),
-            // 추가적인 User 객체들을 필요에 따라 추가할 수 있습니다.
-        )
-        adapter = RoomListAdapter(requireContext(), roomList)
-        adapter.setOnItemClickListener{ selectedItem ->
+
+
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        Log.d("getAllRooms Test", "adapter setting")
+
+        lifecycleScope.launch {
+            val getAllRooms = async { getAllRooms() }
+            getAllRooms.await()
+        }
+
+
+
+        adapter?.setOnItemClickListener{ selectedItem ->
 
             val sharedPreferences = requireActivity().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
             val userId = sharedPreferences.getString("userId", "")?:""
             if (userId.isNotEmpty()) {
                 Log.d("test", "userId: $userId, roomId: ${selectedItem.roomId}")
-                lifecycleScope.launch {
+                if (selectedItem.privateLock==true) {
+                    //방의 lock이 걸려있는 경우
+                    val validPassword = selectedItem.passwordLock
 
-                    val current_roomId = selectedItem.roomId.toString()
+                    val enterPasswordDialog = EnterPasswordDialog()
+                    enterPasswordDialog.show(childFragmentManager, "EnterPasswordDialog")
 
-                    val addMember_toCurrentRoom = async { addRoomMember(userId, current_roomId) }
-                    addMember_toCurrentRoom.await()
+                    enterPasswordDialog.setOnItemClickListener { enteredPassword ->
+                        if (enteredPassword == validPassword) {
+                            Toast.makeText(requireContext(), "비밀번호 일치", Toast.LENGTH_SHORT).show()
 
+                            lifecycleScope.launch {
 
+                                val current_roomId = selectedItem.roomId.toString()
 
+                                val addMember_toCurrentRoom = async { addRoomMember(userId, current_roomId) }
+                                addMember_toCurrentRoom.await()
+
+                            }
+                        }
+
+                        else {
+                            Toast.makeText(requireContext(), "비밀번호 불일치", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                }
+                else { //방의 lock이 걸려있지 않은 경우
+                    lifecycleScope.launch {
+
+                        val current_roomId = selectedItem.roomId.toString()
+
+                        val addMember_toCurrentRoom = async { addRoomMember(userId, current_roomId) }
+                        addMember_toCurrentRoom.await()
+                    }
                 }
             } else {
                 Log.d("test", "userId is null")
@@ -72,11 +104,6 @@ class RoomListFragment : Fragment() {
         recyclerView.adapter = adapter
 
 
-        viewModel.gameRooms.observe(viewLifecycleOwner, Observer { roomList ->
-            adapter.updateData(roomList)
-        })
-
-        viewModel.loadGameRooms()
 
         makingRoomButton.setOnClickListener {
             val addRoomFragment = AddRoomFragment()
@@ -88,6 +115,22 @@ class RoomListFragment : Fragment() {
         }
 
         return view
+    }
+
+    suspend fun getAllRooms() {
+        try {
+            val response = RetrofitClient.instance.getAllRooms()
+            if (response.isSuccessful && response.body() != null) {
+                roomList = response!!.body()
+                adapter?.updateData(roomList!!)
+                Log.d("getAllRooms Test", roomList!!.toString())
+            } else {
+                Log.d("response failed", "실패")
+            }
+
+        } catch(e: java.lang.Exception) {
+            Log.e("Get All Rooms Error", "error: ${e.localizedMessage}}")
+        }
     }
 
     suspend fun addRoomMember(userId:String, current_roomId:String) {
