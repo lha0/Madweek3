@@ -36,7 +36,16 @@ class EnterPasswordDialog : DialogFragment() {
         val confirmButton = dialogView.findViewById<Button>(R.id.confirmButton_toEnterPassword)
         val cancelButton = dialogView.findViewById<Button>(R.id.cancelButton_toEnterPassword)
 
+
         val dialog = builder.create()
+        val displayMetrics = resources.displayMetrics
+        val widthPixels = displayMetrics.widthPixels
+        val heightPixels = displayMetrics.heightPixels
+
+        // Dialog 크기 조절
+        val width = (widthPixels * 0.8).toInt()
+        val height = (heightPixels * 0.8).toInt()
+        dialog.window?.setLayout(width, height)
 
         confirmButton.setOnClickListener {
 
