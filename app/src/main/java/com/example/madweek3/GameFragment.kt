@@ -77,6 +77,7 @@ class GameFragment : Fragment() {
             Context.MODE_PRIVATE
         )
         loggedInUserId = sharedPreferences.getString("userId", "")?:""
+        println("my id " + loggedInUserId)
 
         lifecycleScope.launch {
             val getRoomInfo = async { getRoomInfo(roomId) }
@@ -108,7 +109,7 @@ class GameFragment : Fragment() {
                 val keys = user_keywords.keys()
                 while (keys.hasNext()) {
                     val key = keys.next() as String
-                    if (key == loggedInUserId) {
+                    if (key != loggedInUserId) {
                         val keywordValue = user_keywords.getString(key) // 키워드 값을 추출합니다.
                         val keywordObj = Keyword(key, keywordValue) // Keyword 객체를 생성합니다.
                         other_keywords.add(keywordObj) // 생성된 객체를 리스트에 추가합니다.
@@ -116,7 +117,7 @@ class GameFragment : Fragment() {
                         continue
                     }
                 }
-
+                println("my keyword is " + my_keyword)
                 println("other keyword is " + other_keywords)
                 setupUserRecyclerView()
 
