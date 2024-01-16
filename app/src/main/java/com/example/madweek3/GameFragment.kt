@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,7 +45,7 @@ class GameFragment : Fragment() {
 
     private lateinit var socketViewModel: SocketViewModel
     private lateinit var chatting_text: EditText
-    private lateinit var chat_sendBtn: Button
+    private lateinit var chat_sendBtn: ImageButton
     private lateinit var chat_recycler: RecyclerView
     private lateinit var chatAdapter: ChatAdapter
     private var messages: MutableList<ChatMessage> = mutableListOf()

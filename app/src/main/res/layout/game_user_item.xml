@@ -1,31 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="122dp"
+        android:layout_height="80dp"
         android:layout_marginLeft="20sp"
         android:layout_marginRight="20sp"
         android:layout_marginTop="20sp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+    android:background="@drawable/btn_blue">
 
         <LinearLayout
             android:id="@+id/user"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/userName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="User1"
+                android:textColor="@color/white"
                 android:gravity="center"/>
 
             <TextView
                 android:id="@+id/userKeyword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:text="keyword1"
+                android:textColor="@color/yellow"
                 android:gravity="center"
                 />
 
