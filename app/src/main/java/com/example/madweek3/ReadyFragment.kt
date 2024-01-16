@@ -38,9 +38,7 @@ class ReadyFragment : Fragment() {
     private lateinit var gridViewAdapter: ReadyAdapter
     private lateinit var userId: String
     private lateinit var roomId: String
-    private var adapterCount: Int = 0
     private var isReady = false
-    private var isStartReady = false
     private var userList: ArrayList<User> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -104,7 +102,7 @@ class ReadyFragment : Fragment() {
                     val gridView_userList = view.findViewById<GridView>(R.id.userList)
 
                     gridViewAdapter = ReadyAdapter(requireContext(), userList!!)
-                    adapterCount = gridViewAdapter.count
+
                     // GridView에 Adapter 설정
                     gridView_userList.adapter = gridViewAdapter
                 }
@@ -150,12 +148,12 @@ class ReadyFragment : Fragment() {
                 readyBtn.setText("준비하기")
                 readyBtn.setBackgroundResource(R.drawable.btn_yellow)
                 isReady = false
-                socketViewModel.userUnready(roomId, userId, adapterCount)
+                socketViewModel.userUnready(roomId, userId, gridViewAdapter.count)
             } else {
                 readyBtn.setText("준비완료")
                 readyBtn.setBackgroundResource(R.drawable.btn_gray)
                 isReady = true
-                socketViewModel.userReady(roomId, userId, adapterCount)
+                socketViewModel.userReady(roomId, userId, gridViewAdapter.count)
             }
         }
 
