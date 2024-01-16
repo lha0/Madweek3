@@ -40,7 +40,10 @@ class MypageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        //sechan_imgs_perLevel = "{\"잼민이 세찬\": \"@drawable/level1\", \"깡깡이 세찬\": 30, \"city\": \"New York\"}"
+        sechan_imgs_perLevel = JSONObject("{\"잼민이 세찬\": \"level1\", \"깡깡이 세찬\": \"level2\", \"군기바짝 세찬\": \"level3\", \"덱스? 세찬\": \"level4\", \"출세한 세찬\": \"level5\", \"슬픈데 기쁜 광수\": \"level6\"}")
+        println(sechan_imgs_perLevel)
+
+
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_mypage, container, false)
@@ -85,6 +88,13 @@ class MypageFragment : Fragment() {
         levelView.text = userLevel
         nicknameView.text = userNickname
         emailView.text = userEmail
+        val resource_name = sechan_imgs_perLevel.getString(userLevel)
+        val packageName = "com.example.madweek3"
+        val resourceId = resources.getIdentifier(resource_name, "drawable", packageName)
+
+        if (resourceId != 0) {
+            sechanImg.setImageResource(resourceId)
+        }
 
         //물음표 버튼 눌렀을 때
         questionBtn.setOnClickListener {
