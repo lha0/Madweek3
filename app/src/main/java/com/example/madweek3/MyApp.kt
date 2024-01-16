@@ -21,7 +21,7 @@ class MyApp : Application() {
     private fun createSocket() {
         try {
             // 소켓 생성
-            socket = IO.socket("http://54.180.125.145:5000/")
+            socket = IO.socket("http://43.203.97.209:5000/")
 
             // 소켓 연결
             socket.connect()

@@ -202,7 +202,7 @@ class GameFragment : Fragment() {
             println("after user right active " + active_users)
 
             if (active_users.size == 1) {
-                finishFragment(finish_users)
+                socketViewModel.finishGame(roomId)
             }
         }
 
@@ -263,7 +263,10 @@ class GameFragment : Fragment() {
     }
 
     private fun finishFragment(finish_users: MutableList<String>) {
-        socketViewModel.finishGame(roomId)
+        if (!isAdded) {
+            println("activity is not here")
+            return
+        }
 
         val remainingUsers = ids_ofUserList.filterNot { finish_users.contains(it) }
 
@@ -282,9 +285,9 @@ class GameFragment : Fragment() {
             arguments = bundle
         }
 
-
-
         // EndFragment로 전환합니다.
-        requireActivity().supportFragmentManager?.beginTransaction()?.replace(R.id.game_container, endFragment)?.commit()
+        val transaction = activity?.supportFragmentManager?.beginTransaction()
+        transaction?.replace(R.id.game_container, endFragment)
+        transaction?.commit()
     }
 }

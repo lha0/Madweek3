@@ -18,8 +18,6 @@ class AnswerDialog(context: Context) {
 
         answerEditText = dlg.findViewById(R.id.dialogAnswerEditText)
 
-
-
         answerBtn = dlg.findViewById(R.id.dialogAnswerBtn)
         answerBtn.setOnClickListener {
             val userInput = answerEditText.text.toString()
