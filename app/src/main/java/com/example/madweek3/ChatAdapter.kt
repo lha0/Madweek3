@@ -41,7 +41,7 @@ class ChatAdapter(private val messages: List<ChatMessage>) : RecyclerView.Adapte
         return messages.size
     }
 
-    // 뷰 홀더들...
+    // 뷰 홀더들...git
 }
 class MyMessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val messageTextView: TextView = view.findViewById(R.id.chat_myText)
