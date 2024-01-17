@@ -73,9 +73,9 @@ class ReadyFragment : Fragment() {
         socketViewModel = ViewModelProvider(requireActivity()).get(SocketViewModel::class.java)
         socketViewModel.joinRoom(roomId, userId)
         socketViewModel.socket.on("join success") { args->
-            Log.d("socket test", "join success")
             val data = args[0] as JSONObject
             val otherUserId = data.getString("userId").toString()
+            Log.d("socket test", "join success $otherUserId")
             if (otherUserId != loggedInUserId) {
                 Log.d("socket test", "member update")
                 lifecycleScope.launch {
@@ -113,7 +113,7 @@ class ReadyFragment : Fragment() {
             //뒤로 가기 버튼 누르면 UserList에서 해당 유저가 지워지도록 한다.
             backButton_toRoomList.setOnClickListener {
                 deleteMyUserId(my_userId, roomId)
-                socketViewModel.leaveRoom(roomId)
+                socketViewModel.leaveRoom(my_userId, roomId)
             }
 
         } else {
@@ -126,8 +126,10 @@ class ReadyFragment : Fragment() {
         socketViewModel.socket.on("leave success") {args ->
             activity?.runOnUiThread {
                 println("before remove userList " + userList)
-                val removePosition = userList!!.size-1
-                userList!!.removeAt(removePosition)
+                val data = args[0] as JSONObject
+                val leaveUserId = data.getString("leaveUserId").toString()
+
+                userList?.removeIf { user -> user._id == leaveUserId }
                 gridViewAdapter.notifyDataSetChanged()
                 println("after remove userList " + userList)
             }

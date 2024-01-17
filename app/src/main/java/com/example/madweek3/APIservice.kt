@@ -48,6 +48,9 @@ interface APIservice {
 
     @POST("/getFinishUserInfo")
     suspend fun getFinishUserInfo(@Body finish_list: List<String>): Response<ArrayList<User>>
+
+    @POST("/updateFinishUserInfo")
+    suspend fun updateFinishUserInfo(@Body user_List: ArrayList<User>): Response<UserResponse>
 }
 
 @Parcelize

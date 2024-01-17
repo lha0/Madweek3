@@ -1,6 +1,7 @@
 package com.example.madweek3
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -22,12 +23,19 @@ class EndFragment : Fragment() {
     private var userList: ArrayList<User> ?= null
     private var finish_List: List<String> = listOf()
     private lateinit var outBtn: Button
+    private lateinit var loggedInUserId: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
             finish_List = it.getStringArrayList("finishUsers")?: listOf()
         }
+
+        val sharedPreferences = requireActivity().getSharedPreferences("MySharedPref",
+            Context.MODE_PRIVATE
+        )
+        loggedInUserId = sharedPreferences.getString("userId", "")?:""
+
     }
 
     override fun onCreateView(
@@ -58,6 +66,14 @@ class EndFragment : Fragment() {
 
             if (userList?.isNotEmpty() == true) {
                 // userList가 null이 아니고, 비어있지 않은 경우에만 실행되는 코드
+                if (loggedInUserId == userList!![0]._id) {
+
+                    val updateFinishUserInfo = async {updateFinishUserInfo(userList!!)}
+                    updateFinishUserInfo.await()
+
+
+                }
+
 
             }
         }
@@ -81,6 +97,21 @@ class EndFragment : Fragment() {
 
         } catch(e: Exception) {
             Log.e("Get FinishUserinfo Error", "error: ${e.localizedMessage}}")
+        }
+    }
+
+    suspend fun updateFinishUserInfo(user_List: ArrayList<User>) {
+        try {
+            val response = RetrofitClient.instance.updateFinishUserInfo(user_List)
+            if (response.isSuccessful && response.body() != null) {
+                Log.d("UpdateFinishUser",response.body()!!.message)
+
+            } else {
+                Log.d("response of updating FinishUserInfo failed", "실패")
+            }
+
+        } catch(e: Exception) {
+            Log.e("Update FinishUserinfo Error", "error: ${e.localizedMessage}}")
         }
     }
 
