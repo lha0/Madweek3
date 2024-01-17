@@ -29,6 +29,7 @@ class MainFragment : Fragment() {
         val searchRoomButton = view.findViewById<LinearLayout>(R.id.RoomSearchButton)
         val mypageBtn = view.findViewById<LinearLayout>(R.id.MypageButton)
         val logoutBtn = view.findViewById<LinearLayout>(R.id.logoutButton)
+        val qBtn = view.findViewById<Button>(R.id.main_qBtn)
 
         rankingButton.setOnClickListener {
             val rankingFragment = RankingFragment()
@@ -71,6 +72,11 @@ class MainFragment : Fragment() {
             val intent = Intent(context, LoginActivity::class.java)
             startActivity(intent)
             activity?.finish()
+        }
+
+        qBtn.setOnClickListener {
+            val dialog = GameExplainDialog(requireContext())
+            dialog.show()
         }
 
 
