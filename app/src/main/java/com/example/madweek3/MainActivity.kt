@@ -15,11 +15,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel = ViewModelProvider(this).get(SocketViewModel::class.java)
+        val returnToFragment = intent.getStringExtra("returnToFragment")
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, MainFragment())
-            .commit()
+        if (returnToFragment == "readyFragment") {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container, RoomListFragment())
+                .commit()
+        } else {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container, MainFragment())
+                .commit()
+        }
+
+        viewModel = ViewModelProvider(this).get(SocketViewModel::class.java)
 
     }
 

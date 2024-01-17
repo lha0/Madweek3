@@ -21,6 +21,7 @@ class GameActivity : AppCompatActivity(), OnGameFinishedListener {
 
     override fun onGameFinished() {
         val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("returnToFragment", "readyFragment")
         startActivity(intent)
         finish() // 현재 GameActivity 종료
     }

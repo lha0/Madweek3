@@ -125,12 +125,13 @@ class ReadyFragment : Fragment() {
 
         socketViewModel.socket.on("leave success") {args ->
             activity?.runOnUiThread {
-
+                println("before remove userList " + userList)
                 val data = args[0] as JSONObject
                 val leaveUserId = data.getString("leaveUserId").toString()
 
                 userList?.removeIf { user -> user._id == leaveUserId }
                 gridViewAdapter.notifyDataSetChanged()
+                println("after remove userList " + userList)
             }
         }
 
