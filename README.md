@@ -60,9 +60,6 @@
     - 데이터 베이스에 있는 정보와 일치할 경우, 로그인 성공
     - 정보와 일치하지 않을 경우 자동으로 회원가입 페이지로 이동
 
-![회원가입.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/ec9e4537-8a63-4d61-9479-fd09a2a34b75/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.png)
-
-![Android Small - 16.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/8f0ceb2c-b4b2-429d-a8a3-1a30a1661142/Android_Small_-_16.png)
 
 ### 메인 화면
 
