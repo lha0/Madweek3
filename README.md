@@ -94,9 +94,9 @@
 - 본인이 원하는 방에 들어갈 때, 만약 비밀번호가 존재한다면 비밀번호를 입력해서 일치하는 경우에만 들어갈 수 있도록 설정하였다.
 
 <p align="center" width="100%">
-    <img src="https://github.com/lha0/Madweek3/assets/70615100/94b50407-77b9-4c4c-bd6d-f8164c9171b2" alt="ScreenShot1" width="40%"/>
-    <img src="https://github.com/lha0/Madweek3/assets/70615100/2f38a350-8304-4a10-a60e-89d408dc9b3e" alt="ScreenShot2" width="40%"/>
-    <img src="https://github.com/lha0/Madweek3/assets/70615100/72e44cd9-a5e8-4b28-9f9d-7b5be9e5056d" alt="ScreenShot2" width="40%"/>
+    <img src="https://github.com/lha0/Madweek3/assets/70615100/94b50407-77b9-4c4c-bd6d-f8164c9171b2" alt="ScreenShot1" width="30%"/>
+    <img src="https://github.com/lha0/Madweek3/assets/70615100/2f38a350-8304-4a10-a60e-89d408dc9b3e" alt="ScreenShot2" width="30%"/>
+    <img src="https://github.com/lha0/Madweek3/assets/70615100/72e44cd9-a5e8-4b28-9f9d-7b5be9e5056d" alt="ScreenShot2" width="30%"/>
 </p>
 
 
@@ -138,9 +138,9 @@
 - 틀린 경우 ‘틀렸습니다’라는 메세지가 dialog 창으로 뜨게 되고, 정답일 경우 ‘맞혔습니다’라는 메세지가 뜹니다.
 - 게임을 쭉 진행해서 1명을 제외한 모든 유저들이 정답을 맞혔다면 게임이 종료됩니다.
 <p align="center" width="100%">
-    <img src="https://github.com/lha0/Madweek3/assets/70615100/45003dc8-aa56-4d70-9455-fa23880c18a1" alt="ScreenShot1" width="40%"/>
-    <img src="https://github.com/lha0/Madweek3/assets/70615100/a249dd76-ad76-45db-bd31-ebd26cff4661" alt="ScreenShot2" width="40%"/>
-    <img src="https://github.com/lha0/Madweek3/assets/70615100/7d2f669a-13f1-43c6-8b16-dfe38548a438" alt="ScreenShot2" width="40%"/>
+    <img src="https://github.com/lha0/Madweek3/assets/70615100/45003dc8-aa56-4d70-9455-fa23880c18a1" alt="ScreenShot1" width="30%"/>
+    <img src="https://github.com/lha0/Madweek3/assets/70615100/a249dd76-ad76-45db-bd31-ebd26cff4661" alt="ScreenShot2" width="30%"/>
+    <img src="https://github.com/lha0/Madweek3/assets/70615100/7d2f669a-13f1-43c6-8b16-dfe38548a438" alt="ScreenShot2" width="30%"/>
 </p>
 
 ### 게임 종료 화면
