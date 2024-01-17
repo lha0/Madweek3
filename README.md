@@ -74,6 +74,7 @@
     <img src="https://github.com/lha0/Madweek3/assets/70615100/0e002c74-66dd-433f-adae-628b9b91af0a" alt="ScreenShot2" width="40%"/>
 </p>
 
+
 ### 마이페이지
 
 - 본인의 닉네임, 이메일, 현재 레벨과 그 레벨의 이미지를 확인할 수 있다.
