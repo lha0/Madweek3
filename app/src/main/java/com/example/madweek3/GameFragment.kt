@@ -251,7 +251,7 @@ class GameFragment : Fragment() {
     }
 
     fun findName(userId: String): String? {
-        return userList.find { it.nickname == userId }?.nickname
+        return userList.find { it._id == userId }?.nickname
     }
 
     private suspend fun getRoomInfo(id: String) {
