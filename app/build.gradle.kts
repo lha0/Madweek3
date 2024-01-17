@@ -59,6 +59,8 @@ dependencies {
     //socket.io
     implementation("io.socket:socket.io-client:2.0.1")
 
+    //gif
+    implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.19")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
