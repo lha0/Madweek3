@@ -96,39 +96,7 @@ class GameFragment : Fragment() {
             }
 
 
-            socketViewModel.socket.on("assign keywords success"){args ->
-                println("assign keywords success")
-                val data = args[0] as JSONObject // 이것은 서버에서 받은 JSONObject입니다.
-                val usersJsonArray = JSONArray(data.getString("users"))
-                println("userJsonArray " + usersJsonArray)
-                for (i in 0 until usersJsonArray.length()) {
-                    active_users.add(usersJsonArray.getString(i))
-                }
-                ids_ofUserList = active_users
 
-                val user_keywords = JSONObject(data.getString("user_keywords"))
-                my_keyword = user_keywords.getString(loggedInUserId)
-
-                other_keywords = mutableListOf() // Keyword 객체를 저장할 리스트를 생성합니다.
-
-                // JSONObject의 모든 키들에 대해 순회합니다.
-                val keys = user_keywords.keys()
-                while (keys.hasNext()) {
-                    val key = keys.next() as String
-                    if (key != loggedInUserId) {
-                        val keywordValue = user_keywords.getString(key) // 키워드 값을 추출합니다.
-                        val keywordObj = Keyword(key, keywordValue) // Keyword 객체를 생성합니다.
-                        other_keywords.add(keywordObj) // 생성된 객체를 리스트에 추가합니다.
-                    } else {
-                        continue
-                    }
-                }
-                println("my keyword is " + my_keyword)
-                println("other keyword is " + other_keywords)
-                setupUserRecyclerView()
-
-                Log.d("socket_io test", my_keyword)
-            }
         }
     }
 
@@ -162,6 +130,40 @@ class GameFragment : Fragment() {
             activity?.runOnUiThread {
                 addMessage(messageClass)
             }
+        }
+
+        socketViewModel.socket.on("assign keywords success"){args ->
+            println("assign keywords success")
+            val data = args[0] as JSONObject // 이것은 서버에서 받은 JSONObject입니다.
+            val usersJsonArray = JSONArray(data.getString("users"))
+            println("userJsonArray " + usersJsonArray)
+            for (i in 0 until usersJsonArray.length()) {
+                active_users.add(usersJsonArray.getString(i))
+            }
+            ids_ofUserList = active_users
+
+            val user_keywords = JSONObject(data.getString("user_keywords"))
+            my_keyword = user_keywords.getString(loggedInUserId)
+
+            other_keywords = mutableListOf() // Keyword 객체를 저장할 리스트를 생성합니다.
+
+            // JSONObject의 모든 키들에 대해 순회합니다.
+            val keys = user_keywords.keys()
+            while (keys.hasNext()) {
+                val key = keys.next() as String
+                if (key != loggedInUserId) {
+                    val keywordValue = user_keywords.getString(key) // 키워드 값을 추출합니다.
+                    val keywordObj = Keyword(key, keywordValue) // Keyword 객체를 생성합니다.
+                    other_keywords.add(keywordObj) // 생성된 객체를 리스트에 추가합니다.
+                } else {
+                    continue
+                }
+            }
+            println("my keyword is " + my_keyword)
+            println("other keyword is " + other_keywords)
+            setupUserRecyclerView()
+
+            Log.d("socket_io test", my_keyword)
         }
 
         socketViewModel.socket.on("get message") {args ->
