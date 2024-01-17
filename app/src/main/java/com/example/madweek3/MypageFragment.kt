@@ -98,7 +98,8 @@ class MypageFragment : Fragment() {
 
         //물음표 버튼 눌렀을 때
         questionBtn.setOnClickListener {
-
+            val levelDescription = LevelExplainFragment(requireContext())
+            levelDescription.show()
         }
 
         //수정 버튼 눌렀을 때
