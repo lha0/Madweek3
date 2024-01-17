@@ -34,7 +34,8 @@ class GameFragment : Fragment() {
     //view
     private lateinit var userRecyclerView: RecyclerView
     private lateinit var userAdapter: GameUserAdapter
-    private lateinit var userKeywords: List<UserKeyword>
+    private var userKeywords: List<UserKeyword> = listOf()
+    private lateinit var leaveBtn: Button
 
     private lateinit var currentRoom: Room
     private lateinit var roomLeaderId: String
@@ -96,8 +97,10 @@ class GameFragment : Fragment() {
 
 
             socketViewModel.socket.on("assign keywords success"){args ->
+                println("assign keywords success")
                 val data = args[0] as JSONObject // 이것은 서버에서 받은 JSONObject입니다.
                 val usersJsonArray = JSONArray(data.getString("users"))
+                println("userJsonArray " + usersJsonArray)
                 for (i in 0 until usersJsonArray.length()) {
                     active_users.add(usersJsonArray.getString(i))
                 }
@@ -136,13 +139,14 @@ class GameFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_game, container, false)
         answerBtn = view.findViewById(R.id.answerBtn)
+        leaveBtn = view.findViewById(R.id.leaveBtn)
         chatting_text = view.findViewById(R.id.chat_editText)
         chat_sendBtn = view.findViewById(R.id.chat_sendBtn)
         chat_recycler = view.findViewById(R.id.chatroom)
         chatAdapter = ChatAdapter(messages)
 
         userRecyclerView = view.findViewById(R.id.user_view)
-        userAdapter = GameUserAdapter(listOf())
+        userAdapter = GameUserAdapter(userKeywords)
 
         userRecyclerView.adapter = userAdapter
         userRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -191,6 +195,10 @@ class GameFragment : Fragment() {
             dialog.start()
         }
 
+        leaveBtn.setOnClickListener {
+            (activity as? OnGameFinishedListener)?.onGameFinished()
+        }
+
         socketViewModel.socket.on("user right") {args ->
             println("get right event from server")
             val rightUserId = args[0] as String
@@ -211,16 +219,17 @@ class GameFragment : Fragment() {
                 finishFragment(finish_users)
             }
         }
-
-
         return view
     }
 
     private fun setupUserRecyclerView() {
         activity?.runOnUiThread {
+            println("recycler view called ")
             userKeywords = combineUserKeywords()
+            println("userKeywords " + userKeywords)
             userAdapter = GameUserAdapter(userKeywords)
             userRecyclerView.adapter = userAdapter
+            userAdapter.notifyDataSetChanged()
         }
     }
 

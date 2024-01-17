@@ -125,9 +125,11 @@ class ReadyFragment : Fragment() {
 
         socketViewModel.socket.on("leave success") {args ->
             activity?.runOnUiThread {
+                println("before remove userList " + userList)
                 val removePosition = userList!!.size-1
                 userList!!.removeAt(removePosition)
                 gridViewAdapter.notifyDataSetChanged()
+                println("after remove userList " + userList)
             }
         }
 
